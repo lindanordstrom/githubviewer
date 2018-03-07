@@ -16,12 +16,12 @@
 		432BB8CC20504D1300FF7568 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432BB8CB20504D1300FF7568 /* Repository.swift */; };
 		432BB8CE2050637600FF7568 /* GitHubHiddenConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432BB8CD2050637600FF7568 /* GitHubHiddenConstants.swift */; };
 		432BB8D0205065BF00FF7568 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432BB8CF205065BF00FF7568 /* DataStore.swift */; };
+		432BB8D320507EE700FF7568 /* LoginHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432BB8D220507EE700FF7568 /* LoginHandlerTests.swift */; };
 		43448758204FFE570056E9C6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43448757204FFE570056E9C6 /* AppDelegate.swift */; };
 		4344875A204FFE570056E9C6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43448759204FFE570056E9C6 /* ViewController.swift */; };
 		4344875D204FFE570056E9C6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4344875B204FFE570056E9C6 /* Main.storyboard */; };
 		4344875F204FFE570056E9C6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4344875E204FFE570056E9C6 /* Assets.xcassets */; };
 		43448762204FFE570056E9C6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 43448760204FFE570056E9C6 /* LaunchScreen.storyboard */; };
-		4344876D204FFE570056E9C6 /* GitHubViewerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4344876C204FFE570056E9C6 /* GitHubViewerTests.swift */; };
 		4344889A2050106D0056E9C6 /* Cartfile.resolved in Resources */ = {isa = PBXBuildFile; fileRef = 434487782050106D0056E9C6 /* Cartfile.resolved */; };
 		4344889B2050106D0056E9C6 /* Cartfile in Resources */ = {isa = PBXBuildFile; fileRef = 434487792050106D0056E9C6 /* Cartfile */; };
 		4344889C2050106D0056E9C6 /* 326FB1C1-80F2-38BD-9DCD-1EA3AEE07286.bcsymbolmap in Resources */ = {isa = PBXBuildFile; fileRef = 4344877D2050106D0056E9C6 /* 326FB1C1-80F2-38BD-9DCD-1EA3AEE07286.bcsymbolmap */; };
@@ -61,6 +61,7 @@
 		432BB8CB20504D1300FF7568 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		432BB8CD2050637600FF7568 /* GitHubHiddenConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubHiddenConstants.swift; sourceTree = "<group>"; };
 		432BB8CF205065BF00FF7568 /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
+		432BB8D220507EE700FF7568 /* LoginHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginHandlerTests.swift; sourceTree = "<group>"; };
 		43448754204FFE570056E9C6 /* GitHubViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitHubViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		43448757204FFE570056E9C6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		43448759204FFE570056E9C6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -69,7 +70,6 @@
 		43448761204FFE570056E9C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		43448763204FFE570056E9C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		43448768204FFE570056E9C6 /* GitHubViewerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GitHubViewerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		4344876C204FFE570056E9C6 /* GitHubViewerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubViewerTests.swift; sourceTree = "<group>"; };
 		4344876E204FFE570056E9C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		434487782050106D0056E9C6 /* Cartfile.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile.resolved; sourceTree = "<group>"; };
 		434487792050106D0056E9C6 /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
@@ -119,6 +119,14 @@
 			path = DataObjects;
 			sourceTree = "<group>";
 		};
+		432BB8D120507ECE00FF7568 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				432BB8D220507EE700FF7568 /* LoginHandlerTests.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
 		4344874B204FFE570056E9C6 = {
 			isa = PBXGroup;
 			children = (
@@ -156,7 +164,7 @@
 		4344876B204FFE570056E9C6 /* GitHubViewerTests */ = {
 			isa = PBXGroup;
 			children = (
-				4344876C204FFE570056E9C6 /* GitHubViewerTests.swift */,
+				432BB8D120507ECE00FF7568 /* API */,
 				4344876E204FFE570056E9C6 /* Info.plist */,
 			);
 			path = GitHubViewerTests;
@@ -324,7 +332,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4344876D204FFE570056E9C6 /* GitHubViewerTests.swift in Sources */,
+				432BB8D320507EE700FF7568 /* LoginHandlerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
