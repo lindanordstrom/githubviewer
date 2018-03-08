@@ -2,7 +2,7 @@
 //  LoginHandlerTests.swift
 //  GitHubViewerTests
 //
-//  Created by Yaser on 2018-03-07.
+//  Created by Linda on 2018-03-07.
 //  Copyright © 2018 LindaCCNordstrom. All rights reserved.
 //
 
@@ -37,6 +37,7 @@ class LoginHandlerTests: XCTestCase {
     // then: TRUE should be returned
     func testHasOauthTokenWhenTokenExists() {
         dataStore.value = "1234"
+
         XCTAssertTrue(testObject.hasOauthToken())
         XCTAssertTrue(dataStore.stringForKeyCalled)
     }
@@ -46,8 +47,27 @@ class LoginHandlerTests: XCTestCase {
     // then: FALSE should be returned
     func testHasOauthTokenWhenNoTokenExists() {
         dataStore.value = nil
+
         XCTAssertFalse(testObject.hasOauthToken())
         XCTAssertTrue(dataStore.stringForKeyCalled)
+    }
+
+    // given: oauth token exists in data storage
+    // when: calling getOauthToken
+    // then: the token value should be returned
+    func testGetOauthTokenWhenTokenExists() {
+        dataStore.value = "1234"
+
+        XCTAssertEqual(testObject.getOauthToken(), dataStore.value)
+    }
+
+    // given: oauth token does not exists in data storage
+    // when: calling getOauthToken
+    // then: nil should be returned
+    func testGetOauthTokenWhenNoTokenExists() {
+        dataStore.value = nil
+
+        XCTAssertNil(testObject.getOauthToken())
     }
 
     // when calling navigateToLoginPage
@@ -56,74 +76,115 @@ class LoginHandlerTests: XCTestCase {
         testObject.navigateToLoginPage()
 
         XCTAssertTrue(application.openUrlCalled)
-        XCTAssertEqual(application.url, URL(string: "https://github.com/login/oauth/authorize?client_id=\(GitHubHiddenConstants.clientId)&scope=repo&state=TEST_STATE"))
+        XCTAssertEqual(application.url, URL(string: "https://github.com/login/oauth/authorize?client_id=\(GitHubHiddenConstants.clientId)&scope=repo%20user&state=TEST_STATE"))
 
     }
 
     // when: get token is called with an url with a code
     // then: a fetch call is made to the API handler
     func testGetTokenWithCode() {
-
         testObject.getToken(url: URL(string: "test://?code=12345")!)
 
         XCTAssertEqual(githubApiHandler.url?.absoluteString, "https://github.com/login/oauth/access_token")
-        XCTAssertEqual(githubApiHandler.parameters as! [String: String], ["client_id": GitHubHiddenConstants.clientId, "client_secret": GitHubHiddenConstants.clientSecret, "code": "12345"])
-        XCTAssertEqual(githubApiHandler.headers!, ["Accept": "application/json"])
-        XCTAssertTrue(githubApiHandler.fetchJSONwasCalled)
+        XCTAssertEqual(githubApiHandler.parameters as! [String: String], ["code": "12345"])
+        XCTAssertTrue(githubApiHandler.networkRequestWasCalled)
     }
 
     // when: get token is called with an url without a code
     // then: no fetch call is made
     func testGetTokenWithoutCode() {
-
         testObject.getToken(url: URL(string: "test://?test=12345")!)
 
-        XCTAssertFalse(githubApiHandler.fetchJSONwasCalled)
+        XCTAssertFalse(githubApiHandler.networkRequestWasCalled)
+    }
+
+    // given: oauth token exists
+    // when: get user details is called
+    // then: a fetch call is made to the API handler
+    func testGetUserDetailsWhenOauthTokenExists() {
+        dataStore.value = "ABCDE"
+        testObject.getUserDetails { _ in }
+
+        XCTAssertEqual(githubApiHandler.url?.absoluteString, "https://api.github.com/user")
+        XCTAssertEqual(githubApiHandler.parameters as! [String: String], ["access_token":"ABCDE"])
+        XCTAssertTrue(githubApiHandler.networkRequestWasCalled)
+    }
+
+    // given: oauth token does not exists
+    // when: get user details is called
+    // then: no fetch call is made to the API handler
+    func testGetUserDetailsWhenNoOauthTokenExists() {
+        dataStore.value = nil
+        testObject.getUserDetails { _ in }
+
+        XCTAssertFalse(githubApiHandler.networkRequestWasCalled)
+    }
+
+    // given: user details is called
+    // when: data is returned that matches the user object
+    // then: the closure is called with the created  user
+    func testGetUserDetailsDataRetunedAsUser() {
+        dataStore.value = "ABCDE"
+        let exp = expectation(description: "closure called")
+
+        let userDict = ["name":"Linda Nordstrom", "location": "Sweden"]
+        do {
+            githubApiHandler.data = try JSONEncoder().encode(userDict)
+        } catch { XCTFail() }
+
+        testObject.getUserDetails { user in
+            XCTAssertEqual(user?.name, "Linda Nordstrom")
+            XCTAssertEqual(user?.location, "Sweden")
+            exp.fulfill()
+        }
+
+        waitForExpectations(timeout: 1) { error in
+            if error != nil { XCTFail() }
+        }
+    }
+
+    // given: user details is called
+    // when: data is returned that does not match the user object
+    // then: the closure is called without any user object
+    func testGetUserDetailsWrongDataReturned() {
+        dataStore.value = "ABCDE"
+        let exp = expectation(description: "closure called")
+
+        let userDict = ["name":123]
+        do {
+            githubApiHandler.data = try JSONEncoder().encode(userDict)
+        } catch { XCTFail() }
+
+        testObject.getUserDetails { user in
+            XCTAssertNil(user)
+            exp.fulfill()
+        }
+
+        waitForExpectations(timeout: 1) { error in
+            if error != nil { XCTFail() }
+        }
+    }
+
+    // given: user details is called
+    // when: error is returned
+    // then: the closure is called without any user object
+    func testGetUserDetailsWithError() {
+        dataStore.value = "ABCDE"
+        let exp = expectation(description: "closure called")
+
+        githubApiHandler.error = NSError(domain: "test", code: 1, userInfo: nil)
+
+        testObject.getUserDetails { user in
+            XCTAssertNil(user)
+            exp.fulfill()
+        }
+
+        waitForExpectations(timeout: 1) { error in
+            if error != nil { XCTFail() }
+        }
     }
 
 }
 
-class TestUserDefaults: DataStore {
-    var setValueForKeyCalled = false
-    var stringForKeyCalled = false
-    var key: String?
-    var value: String?
 
-    func set(_ value: Any?, forKey defaultName: String) {
-        self.key = defaultName
-        self.value = value as? String
-        setValueForKeyCalled = true
-    }
-
-    func string(forKey: String) -> String? {
-        stringForKeyCalled = true
-        key = forKey
-        return value
-    }
-}
-
-class TestApiHandler: APIHandler {
-    var url: URL?
-    var parameters: [String: Any]?
-    var headers: [String: String]?
-    var fetchJSONwasCalled = false
-
-
-    func fetchJSON(url: URL, parameters: [String : Any]?, headers: [String : String]?, closure: @escaping ((Data?, Error?) -> Void)) {
-        self.url = url
-        self.parameters = parameters
-        self.headers = headers
-        fetchJSONwasCalled = true
-    }
-}
-
-class TestApplication: Application {
-    var url: URL?
-    var openUrlCalled = false
-
-    func open(_ url: URL, options: [String : Any], completionHandler completion: ((Bool) -> Void)?) {
-        self.url = url
-        openUrlCalled = true
-    }
-}
 

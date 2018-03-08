@@ -8,18 +8,12 @@
 
 import UIKit
 
-protocol Application {
-    func open(_ url: URL, options: [String : Any], completionHandler completion: ((Bool) -> Swift.Void)?)
-}
-
-extension UIApplication: Application {}
-
 class LoginHandler {
     static let shared = LoginHandler()
 
-    var dataStore: DataStore
-    var githubApiHandler: APIHandler
-    var application: Application
+    private var dataStore: DataStore
+    private var githubApiHandler: APIHandler
+    private var application: Application
 
     init(dataStore: DataStore = UserDefaults.standard, githubApiHandler: APIHandler = GithubAPIHandler.shared, application: Application = UIApplication.shared) {
         self.dataStore = dataStore
@@ -27,48 +21,78 @@ class LoginHandler {
         self.application = application
     }
 
+    func getOauthToken() -> String? {
+        return dataStore.string(forKey: "OauthToken")
+    }
+
     func hasOauthToken() -> Bool {
-        return dataStore.string(forKey: "OauthToken") != nil
+        return getOauthToken() != nil
     }
 
     func navigateToLoginPage() {
-        let urlString = "https://github.com/login/oauth/authorize?client_id=\(GitHubHiddenConstants.clientId)&scope=repo&state=TEST_STATE"
+        let urlString = "https://github.com/login/oauth/authorize?client_id=\(GitHubHiddenConstants.clientId)&scope=repo%20user&state=TEST_STATE" // TODO STORE STRINGS
         guard let url = URL(string: urlString) else { return }
         application.open(url, options: [:], completionHandler: nil)
     }
 
-    func getToken(url: URL) {
+    private func getCodeFrom(url: URL) -> String? {
         let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
-        var code: String?
-        guard let items = components?.queryItems else { return } // TODO HANDLE ERROR
+        guard let items = components?.queryItems else { return nil }
         for item in items {
             if item.name.lowercased() == "code" {
-                code = item.value
-                break
+                return item.value
             }
         }
+        return nil
+    }
 
-        guard let getTokenURL = URL(string: "https://github.com/login/oauth/access_token"),
-            let recievedCode = code else { return } // TODO HANDLE ERROR
+    func getToken(url: URL) {
+        guard let recievedCode = getCodeFrom(url: url),
+            let getTokenURL = URL(string: "https://github.com/login/oauth/access_token") else {
+            return // TODO HANDLE ERROR
+        }
 
-        let params = ["client_id": GitHubHiddenConstants.clientId, "client_secret": GitHubHiddenConstants.clientSecret, "code": recievedCode]
+        let params = ["code": recievedCode]
 
-        let headers = ["Accept": "application/json"]
-
-        githubApiHandler.fetchJSON(url: getTokenURL, parameters: params, headers: headers) { (data, error) in
+        githubApiHandler.networkRequest(url: getTokenURL, method: .post, parameters: params, headers: nil) { (data, error) in
             guard let data = data, error == nil else {
-                print(error) // TODO HANDLE ERROR
+                print(error?.localizedDescription ?? "error fetching data") // TODO HANDLE ERROR
                 return
             }
 
             do {
                 if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
                     let accessToken = json["access_token"] {
-                    self.dataStore.set(accessToken, forKey: "OauthToken") // TODO KEYCHAIN
-                    print(accessToken)
+                        self.dataStore.set(accessToken, forKey: "OauthToken") // TODO KEYCHAIN
+                        print(accessToken)
                 }
             } catch {
-                print(error) // TODO HANDLE ERROR
+                print(error.localizedDescription) // TODO HANDLE ERROR
+            }
+        }
+    }
+
+    func getUserDetails(closure: @escaping (User?)->()) {
+        guard let oauthToken = getOauthToken(),
+            let url = URL(string: "https://api.github.com/user") else {
+                closure(nil)
+                return
+        }
+
+        let param = ["access_token": oauthToken]
+
+        githubApiHandler.networkRequest(url: url, method: .get, parameters: param, headers: nil) { (data, error) in
+            guard let data = data, error == nil else {
+                print(error?.localizedDescription ?? "error fetching data") // TODO HANDLE ERROR
+                closure(nil)
+                return
+            }
+
+            do {
+                let user = try JSONDecoder().decode(User.self, from: data)
+                closure(user)
+            } catch {
+                closure(nil)
             }
         }
     }

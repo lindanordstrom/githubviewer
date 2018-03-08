@@ -2,7 +2,7 @@
 //  DataStore.swift
 //  GitHubViewer
 //
-//  Created by Yaser on 2018-03-07.
+//  Created by Linda on 2018-03-07.
 //  Copyright © 2018 LindaCCNordstrom. All rights reserved.
 //
 

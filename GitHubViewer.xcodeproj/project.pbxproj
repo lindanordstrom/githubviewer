@@ -17,6 +17,9 @@
 		432BB8CE2050637600FF7568 /* GitHubHiddenConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432BB8CD2050637600FF7568 /* GitHubHiddenConstants.swift */; };
 		432BB8D0205065BF00FF7568 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432BB8CF205065BF00FF7568 /* DataStore.swift */; };
 		432BB8D320507EE700FF7568 /* LoginHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432BB8D220507EE700FF7568 /* LoginHandlerTests.swift */; };
+		432BB8D5205099C700FF7568 /* Application.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432BB8D4205099C700FF7568 /* Application.swift */; };
+		432BB8D720516AF700FF7568 /* MockClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432BB8D620516AF700FF7568 /* MockClasses.swift */; };
+		432BB8D92051829F00FF7568 /* RepositoryHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 432BB8D82051829F00FF7568 /* RepositoryHandlerTests.swift */; };
 		43448758204FFE570056E9C6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43448757204FFE570056E9C6 /* AppDelegate.swift */; };
 		4344875A204FFE570056E9C6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43448759204FFE570056E9C6 /* ViewController.swift */; };
 		4344875D204FFE570056E9C6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4344875B204FFE570056E9C6 /* Main.storyboard */; };
@@ -62,6 +65,9 @@
 		432BB8CD2050637600FF7568 /* GitHubHiddenConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubHiddenConstants.swift; sourceTree = "<group>"; };
 		432BB8CF205065BF00FF7568 /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		432BB8D220507EE700FF7568 /* LoginHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginHandlerTests.swift; sourceTree = "<group>"; };
+		432BB8D4205099C700FF7568 /* Application.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Application.swift; sourceTree = "<group>"; };
+		432BB8D620516AF700FF7568 /* MockClasses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockClasses.swift; sourceTree = "<group>"; };
+		432BB8D82051829F00FF7568 /* RepositoryHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryHandlerTests.swift; sourceTree = "<group>"; };
 		43448754204FFE570056E9C6 /* GitHubViewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitHubViewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		43448757204FFE570056E9C6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		43448759204FFE570056E9C6 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -106,6 +112,7 @@
 				432BB8C620504C8200FF7568 /* RespositoryHandler.swift */,
 				432BB8CD2050637600FF7568 /* GitHubHiddenConstants.swift */,
 				432BB8CF205065BF00FF7568 /* DataStore.swift */,
+				432BB8D4205099C700FF7568 /* Application.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -123,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				432BB8D220507EE700FF7568 /* LoginHandlerTests.swift */,
+				432BB8D82051829F00FF7568 /* RepositoryHandlerTests.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -164,6 +172,7 @@
 		4344876B204FFE570056E9C6 /* GitHubViewerTests */ = {
 			isa = PBXGroup;
 			children = (
+				432BB8D620516AF700FF7568 /* MockClasses.swift */,
 				432BB8D120507ECE00FF7568 /* API */,
 				4344876E204FFE570056E9C6 /* Info.plist */,
 			);
@@ -316,6 +325,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				432BB8D5205099C700FF7568 /* Application.swift in Sources */,
 				432BB8CC20504D1300FF7568 /* Repository.swift in Sources */,
 				432BB8C720504C8200FF7568 /* RespositoryHandler.swift in Sources */,
 				432BB8C320504C5800FF7568 /* APIHandler.swift in Sources */,
@@ -332,6 +342,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				432BB8D720516AF700FF7568 /* MockClasses.swift in Sources */,
+				432BB8D92051829F00FF7568 /* RepositoryHandlerTests.swift in Sources */,
 				432BB8D320507EE700FF7568 /* LoginHandlerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
