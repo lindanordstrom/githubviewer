@@ -107,12 +107,10 @@
 		432BB8C120504C2B00FF7568 /* API */ = {
 			isa = PBXGroup;
 			children = (
+				432BB8DA2051A0DA00FF7568 /* Protocols */,
 				432BB8C220504C5800FF7568 /* APIHandler.swift */,
 				432BB8C420504C6B00FF7568 /* LoginHandler.swift */,
 				432BB8C620504C8200FF7568 /* RespositoryHandler.swift */,
-				432BB8CD2050637600FF7568 /* GitHubHiddenConstants.swift */,
-				432BB8CF205065BF00FF7568 /* DataStore.swift */,
-				432BB8D4205099C700FF7568 /* Application.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -133,6 +131,40 @@
 				432BB8D82051829F00FF7568 /* RepositoryHandlerTests.swift */,
 			);
 			path = API;
+			sourceTree = "<group>";
+		};
+		432BB8DA2051A0DA00FF7568 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				432BB8CF205065BF00FF7568 /* DataStore.swift */,
+				432BB8D4205099C700FF7568 /* Application.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		432BB8DB2051A10300FF7568 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				432BB8CD2050637600FF7568 /* GitHubHiddenConstants.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
+		432BB8DC2051A11E00FF7568 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				43448759204FFE570056E9C6 /* ViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		432BB8DD2051A16200FF7568 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				4344875E204FFE570056E9C6 /* Assets.xcassets */,
+				43448757204FFE570056E9C6 /* AppDelegate.swift */,
+			);
+			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
 		4344874B204FFE570056E9C6 = {
@@ -157,12 +189,12 @@
 		43448756204FFE570056E9C6 /* GitHubViewer */ = {
 			isa = PBXGroup;
 			children = (
+				432BB8DC2051A11E00FF7568 /* ViewControllers */,
+				432BB8DB2051A10300FF7568 /* Constants */,
 				432BB8C820504CF800FF7568 /* DataObjects */,
 				432BB8C120504C2B00FF7568 /* API */,
-				43448757204FFE570056E9C6 /* AppDelegate.swift */,
-				43448759204FFE570056E9C6 /* ViewController.swift */,
+				432BB8DD2051A16200FF7568 /* SupportingFiles */,
 				4344875B204FFE570056E9C6 /* Main.storyboard */,
-				4344875E204FFE570056E9C6 /* Assets.xcassets */,
 				43448760204FFE570056E9C6 /* LaunchScreen.storyboard */,
 				43448763204FFE570056E9C6 /* Info.plist */,
 			);
