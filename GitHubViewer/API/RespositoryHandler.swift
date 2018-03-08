@@ -14,7 +14,7 @@ class RepositoryHandler {
     var githubApiHandler: APIHandler
     var loginHandler: LoginHandler
 
-    init(githubApiHandler: APIHandler = GithubAPIHandler.shared, loginHandler: LoginHandler = LoginHandler.shared) {
+    init(githubApiHandler: APIHandler = GithubAPIHandler.shared, loginHandler: LoginHandler = GithubLoginHandler.shared) {
         self.githubApiHandler = githubApiHandler
         self.loginHandler = loginHandler
     }
@@ -29,18 +29,14 @@ class RepositoryHandler {
         let param = ["access_token": oauthToken]
 
         githubApiHandler.networkRequest(url: url, method: .get, parameters: param, headers: nil) { (data, error) in
-            guard let data = data, error == nil else {
-                print(error?.localizedDescription ?? "error fetching data") // TODO HANDLE ERROR
-                closure(nil)
-                return
+            guard let data = data,
+                error == nil,
+                let repositories = try? JSONDecoder().decode([Repository].self, from: data) else {
+                    print(error?.localizedDescription ?? "error fetching data") // TODO HANDLE ERROR
+                    closure(nil)
+                    return
             }
-
-            do {
-                let repositories = try JSONDecoder().decode([Repository].self, from: data)
-                closure(repositories)
-            } catch {
-                closure(nil)
-            }
+            closure(repositories)
         }
     }
 }

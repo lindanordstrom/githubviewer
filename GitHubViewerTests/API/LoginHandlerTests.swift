@@ -21,7 +21,7 @@ class LoginHandlerTests: XCTestCase {
         dataStore = TestUserDefaults()
         githubApiHandler = TestApiHandler()
         application = TestApplication()
-        testObject = LoginHandler(dataStore: dataStore, githubApiHandler: githubApiHandler, application: application)
+        testObject = GithubLoginHandler(dataStore: dataStore, githubApiHandler: githubApiHandler, application: application)
     }
 
     override func tearDown() {
@@ -128,9 +128,7 @@ class LoginHandlerTests: XCTestCase {
         let exp = expectation(description: "closure called")
 
         let userDict = ["name":"Linda Nordstrom", "location": "Sweden"]
-        do {
-            githubApiHandler.data = try JSONEncoder().encode(userDict)
-        } catch { XCTFail() }
+        githubApiHandler.data = try? JSONEncoder().encode(userDict)
 
         testObject.getUserDetails { user in
             XCTAssertEqual(user?.name, "Linda Nordstrom")
@@ -151,9 +149,7 @@ class LoginHandlerTests: XCTestCase {
         let exp = expectation(description: "closure called")
 
         let userDict = ["name":123]
-        do {
-            githubApiHandler.data = try JSONEncoder().encode(userDict)
-        } catch { XCTFail() }
+        githubApiHandler.data = try? JSONEncoder().encode(userDict)
 
         testObject.getUserDetails { user in
             XCTAssertNil(user)

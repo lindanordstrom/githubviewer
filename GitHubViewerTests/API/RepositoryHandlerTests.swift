@@ -13,21 +13,19 @@ class RepositoryHandlerTests: XCTestCase {
 
     var testObject: RepositoryHandler!
     var githubApiHandler: TestApiHandler!
-    var loginHandler: LoginHandler!
-    var dataStore: TestUserDefaults!
+    var loginHandler: TestLoginHandler!
 
     override func setUp() {
         super.setUp()
         githubApiHandler = TestApiHandler()
-        dataStore = TestUserDefaults()
-        loginHandler = LoginHandler(dataStore: dataStore)
+        loginHandler = TestLoginHandler()
         testObject = RepositoryHandler(githubApiHandler: githubApiHandler, loginHandler: loginHandler)
+        loginHandler.oauthToken = "ABCDE"
     }
 
     override func tearDown() {
         testObject = nil
         githubApiHandler = nil
-        dataStore = nil
         loginHandler = nil
         super.tearDown()
     }
@@ -36,7 +34,6 @@ class RepositoryHandlerTests: XCTestCase {
     // when: get repositories is called
     // then: a fetch call is made to the API handler
     func testGetRepositoriesWhenOauthTokenExists() {
-        dataStore.value = "ABCDE"
         testObject.getRepositories() { _ in }
 
         XCTAssertEqual(githubApiHandler.url?.absoluteString, "https://api.github.com/user/repos")
@@ -48,7 +45,7 @@ class RepositoryHandlerTests: XCTestCase {
     // when: get repositories is called
     // then: no fetch call is made to the API handler
     func testGetUserDetailsWhenNoOauthTokenExists() {
-        dataStore.value = nil
+        loginHandler.oauthToken = nil
         testObject.getRepositories() { _ in }
 
         XCTAssertFalse(githubApiHandler.networkRequestWasCalled)
@@ -58,13 +55,10 @@ class RepositoryHandlerTests: XCTestCase {
     // when: data is returned with an array with a repository object
     // then: the closure is called with the created array of repositories
     func testGetUserDetailsDataRetunedAsUser() {
-        dataStore.value = "ABCDE"
         let exp = expectation(description: "closure called")
 
         let userDict = [["name":"Testrepo", "language": "Swift"]]
-        do {
-            githubApiHandler.data = try JSONEncoder().encode(userDict)
-        } catch { XCTFail() }
+        githubApiHandler.data = try? JSONEncoder().encode(userDict)
 
         testObject.getRepositories() { repos in
             XCTAssertEqual(repos?.first?.name, "Testrepo")
@@ -81,13 +75,10 @@ class RepositoryHandlerTests: XCTestCase {
     // when: data is returned that does not match repository objects
     // then: the closure is called without any repository object
     func testGetUserDetailsWrongDataReturned() {
-        dataStore.value = "ABCDE"
         let exp = expectation(description: "closure called")
 
         let userDict = [["name":123]]
-        do {
-            githubApiHandler.data = try JSONEncoder().encode(userDict)
-        } catch { XCTFail() }
+        githubApiHandler.data = try? JSONEncoder().encode(userDict)
 
         testObject.getRepositories() { repos in
             XCTAssertNil(repos)
@@ -103,7 +94,6 @@ class RepositoryHandlerTests: XCTestCase {
     // when: error is returned
     // then: the closure is called without any repository object
     func testGetUserDetailsWithError() {
-        dataStore.value = "ABCDE"
         let exp = expectation(description: "closure called")
 
         githubApiHandler.error = NSError(domain: "test", code: 1, userInfo: nil)

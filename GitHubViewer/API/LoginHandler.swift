@@ -8,8 +8,16 @@
 
 import UIKit
 
-class LoginHandler {
-    static let shared = LoginHandler()
+protocol LoginHandler {
+    func getOauthToken() -> String?
+    func hasOauthToken() -> Bool
+    func navigateToLoginPage()
+    func getToken(url: URL)
+    func getUserDetails(closure: @escaping (User?)->())
+}
+
+class GithubLoginHandler: LoginHandler {
+    static let shared = GithubLoginHandler()
 
     private var dataStore: DataStore
     private var githubApiHandler: APIHandler
@@ -55,20 +63,14 @@ class LoginHandler {
         let params = ["code": recievedCode]
 
         githubApiHandler.networkRequest(url: getTokenURL, method: .post, parameters: params, headers: nil) { (data, error) in
-            guard let data = data, error == nil else {
-                print(error?.localizedDescription ?? "error fetching data") // TODO HANDLE ERROR
-                return
+            guard let data = data,
+                error == nil,
+                let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
+                let accessToken = json?["access_token"] else {
+                    print(error?.localizedDescription ?? "error fetching data") // TODO HANDLE ERROR
+                    return
             }
-
-            do {
-                if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
-                    let accessToken = json["access_token"] {
-                        self.dataStore.set(accessToken, forKey: "OauthToken") // TODO KEYCHAIN
-                        print(accessToken)
-                }
-            } catch {
-                print(error.localizedDescription) // TODO HANDLE ERROR
-            }
+            self.dataStore.set(accessToken, forKey: "OauthToken") // TODO KEYCHAIN
         }
     }
 
@@ -82,18 +84,14 @@ class LoginHandler {
         let param = ["access_token": oauthToken]
 
         githubApiHandler.networkRequest(url: url, method: .get, parameters: param, headers: nil) { (data, error) in
-            guard let data = data, error == nil else {
-                print(error?.localizedDescription ?? "error fetching data") // TODO HANDLE ERROR
-                closure(nil)
-                return
+            guard let data = data,
+                error == nil,
+                let user = try? JSONDecoder().decode(User.self, from: data) else {
+                    print(error?.localizedDescription ?? "error fetching data") // TODO HANDLE ERROR
+                    closure(nil)
+                    return
             }
-
-            do {
-                let user = try JSONDecoder().decode(User.self, from: data)
-                closure(user)
-            } catch {
-                closure(nil)
-            }
+            closure(user)
         }
     }
 }

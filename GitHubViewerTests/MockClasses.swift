@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 @testable import GitHubViewer
 
 class TestUserDefaults: DataStore {
@@ -50,6 +51,56 @@ class TestApiHandler: APIHandler {
     }
 }
 
+class TestLoginHandler: LoginHandler {
+    var oauthToken: String?
+    var hasOauthTokenVar = false
+    var navigateToLoginPageCalled = false
+    var getUserDetailsCalled = false
+    var url: URL?
+    var user: User?
+
+    func getOauthToken() -> String? {
+        return oauthToken
+    }
+    func hasOauthToken() -> Bool {
+        return hasOauthTokenVar
+    }
+    func navigateToLoginPage() {
+        navigateToLoginPageCalled = true
+    }
+    func getToken(url: URL) {
+        self.url = url
+    }
+    func getUserDetails(closure: @escaping (User?)->()) {
+        getUserDetailsCalled = true
+        closure(user)
+    }
+}
+
+class TestProfilePageUI: ProfilePageUI {
+    var clearAllValuesCalled = false
+    var name: String?
+    var location: String?
+    var company: String?
+    var image: UIImage?
+
+    func clearAllValues() {
+        clearAllValuesCalled = true
+    }
+    func setNameLabel(text: String?) {
+        name = text
+    }
+    func setLocationLabel(text: String?) {
+        location = text
+    }
+    func setCompanyLabel(text: String?) {
+        company = text
+    }
+    func setAvatarImage(image: UIImage?) {
+        self.image = image
+    }
+}
+
 class TestApplication: Application {
     var url: URL?
     var openUrlCalled = false
@@ -59,3 +110,4 @@ class TestApplication: Application {
         openUrlCalled = true
     }
 }
+
