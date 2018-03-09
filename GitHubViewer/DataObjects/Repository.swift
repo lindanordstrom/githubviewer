@@ -11,4 +11,7 @@ import Foundation
 struct Repository: Codable {
     var name: String?
     var language: String?
+    var stargazers_count: Int?
+    var watchers_count: Int?
+    var forks: Int?
 }
