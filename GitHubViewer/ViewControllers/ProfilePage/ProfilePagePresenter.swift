@@ -24,7 +24,9 @@ class ProfilePagePresenter {
         if loginHandler.hasOauthToken() {
             loginHandler.getUserDetails() { user in
                 guard let user = user else {
-                    return // TODO HANDLE WHEN NO USER IS RETURNED
+                    // TODO ADD SOME ERROR MESSAGE
+                    self.signUserOut()
+                    return
                 }
                 self.ui.setNameLabel(text: user.name)
                 self.ui.setLocationLabel(text: user.location)
@@ -32,8 +34,13 @@ class ProfilePagePresenter {
                 self.ui.setAvatarImage(image: self.getImageFrom(urlString: user.avatar_url))
             }
         } else {
-            loginHandler.navigateToLoginPage()
+            signUserOut()
         }
+    }
+
+    func signUserOut() {
+        loginHandler.clearOauthToken()
+        ui.navigateToSignInScreen()
     }
 
     private func getImageFrom(urlString: String?) -> UIImage? {

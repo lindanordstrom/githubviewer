@@ -33,9 +33,12 @@
 		439D26882051A406005434C2 /* RepositoriesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439D26872051A406005434C2 /* RepositoriesPresenter.swift */; };
 		439D268A2051A416005434C2 /* ProfilePagePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439D26892051A416005434C2 /* ProfilePagePresenter.swift */; };
 		439D268F2051A484005434C2 /* ProfilePagePresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439D268E2051A484005434C2 /* ProfilePagePresenterTests.swift */; };
-		439D26912051A497005434C2 /* RepositoryListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439D26902051A497005434C2 /* RepositoryListPresenter.swift */; };
+		439D26912051A497005434C2 /* RepositoryListPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439D26902051A497005434C2 /* RepositoryListPresenterTests.swift */; };
 		439D26932051D310005434C2 /* RepositoriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439D26922051D310005434C2 /* RepositoriesTableViewController.swift */; };
 		439D26952051D90F005434C2 /* RepositoriesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439D26942051D90F005434C2 /* RepositoriesTableViewCell.swift */; };
+		439D269820529446005434C2 /* SignInPagePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439D269720529446005434C2 /* SignInPagePresenter.swift */; };
+		439D269A2052945E005434C2 /* SignInPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439D26992052945E005434C2 /* SignInPageViewController.swift */; };
+		439D269D2052B0BD005434C2 /* SignInPagePresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439D269C2052B0BD005434C2 /* SignInPagePresenterTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -92,9 +95,12 @@
 		439D26872051A406005434C2 /* RepositoriesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoriesPresenter.swift; sourceTree = "<group>"; };
 		439D26892051A416005434C2 /* ProfilePagePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePagePresenter.swift; sourceTree = "<group>"; };
 		439D268E2051A484005434C2 /* ProfilePagePresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePagePresenterTests.swift; sourceTree = "<group>"; };
-		439D26902051A497005434C2 /* RepositoryListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryListPresenter.swift; sourceTree = "<group>"; };
+		439D26902051A497005434C2 /* RepositoryListPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryListPresenterTests.swift; sourceTree = "<group>"; };
 		439D26922051D310005434C2 /* RepositoriesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoriesTableViewController.swift; sourceTree = "<group>"; };
 		439D26942051D90F005434C2 /* RepositoriesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoriesTableViewCell.swift; sourceTree = "<group>"; };
+		439D269720529446005434C2 /* SignInPagePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInPagePresenter.swift; sourceTree = "<group>"; };
+		439D26992052945E005434C2 /* SignInPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInPageViewController.swift; sourceTree = "<group>"; };
+		439D269C2052B0BD005434C2 /* SignInPagePresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInPagePresenterTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +171,7 @@
 		432BB8DC2051A11E00FF7568 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				439D269620529423005434C2 /* SignInPage */,
 				439D26862051A3DE005434C2 /* RepositoryList */,
 				439D26852051A3D8005434C2 /* ProfilePage */,
 			);
@@ -284,6 +291,7 @@
 		439D268B2051A456005434C2 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				439D269B2052B0A6005434C2 /* SignInPage */,
 				439D268D2051A46A005434C2 /* ProfilePage */,
 				439D268C2051A461005434C2 /* RepositoryList */,
 			);
@@ -293,7 +301,7 @@
 		439D268C2051A461005434C2 /* RepositoryList */ = {
 			isa = PBXGroup;
 			children = (
-				439D26902051A497005434C2 /* RepositoryListPresenter.swift */,
+				439D26902051A497005434C2 /* RepositoryListPresenterTests.swift */,
 			);
 			path = RepositoryList;
 			sourceTree = "<group>";
@@ -304,6 +312,23 @@
 				439D268E2051A484005434C2 /* ProfilePagePresenterTests.swift */,
 			);
 			path = ProfilePage;
+			sourceTree = "<group>";
+		};
+		439D269620529423005434C2 /* SignInPage */ = {
+			isa = PBXGroup;
+			children = (
+				439D26992052945E005434C2 /* SignInPageViewController.swift */,
+				439D269720529446005434C2 /* SignInPagePresenter.swift */,
+			);
+			path = SignInPage;
+			sourceTree = "<group>";
+		};
+		439D269B2052B0A6005434C2 /* SignInPage */ = {
+			isa = PBXGroup;
+			children = (
+				439D269C2052B0BD005434C2 /* SignInPagePresenterTests.swift */,
+			);
+			path = SignInPage;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -425,8 +450,10 @@
 				43448758204FFE570056E9C6 /* AppDelegate.swift in Sources */,
 				432BB8C520504C6B00FF7568 /* LoginHandler.swift in Sources */,
 				432BB8D0205065BF00FF7568 /* DataStore.swift in Sources */,
+				439D269820529446005434C2 /* SignInPagePresenter.swift in Sources */,
 				439D26882051A406005434C2 /* RepositoriesPresenter.swift in Sources */,
 				439D26932051D310005434C2 /* RepositoriesTableViewController.swift in Sources */,
+				439D269A2052945E005434C2 /* SignInPageViewController.swift in Sources */,
 				432BB8CE2050637600FF7568 /* GitHubHiddenConstants.swift in Sources */,
 				439D268A2051A416005434C2 /* ProfilePagePresenter.swift in Sources */,
 			);
@@ -436,7 +463,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				439D26912051A497005434C2 /* RepositoryListPresenter.swift in Sources */,
+				439D26912051A497005434C2 /* RepositoryListPresenterTests.swift in Sources */,
+				439D269D2052B0BD005434C2 /* SignInPagePresenterTests.swift in Sources */,
 				432BB8D720516AF700FF7568 /* MockClasses.swift in Sources */,
 				432BB8D92051829F00FF7568 /* RepositoryHandlerTests.swift in Sources */,
 				432BB8D320507EE700FF7568 /* LoginHandlerTests.swift in Sources */,

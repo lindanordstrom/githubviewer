@@ -12,23 +12,29 @@ import UIKit
 class RepositoriesPresenter {
 
     private let ui: RepositoriesUI
+    private let loginHandler: LoginHandler
+    private let repositoryHandler: RepositoryHandler
     private var repos: [Repository]?
 
-    init(ui: RepositoriesUI) {
+    init(ui: RepositoriesUI, loginHandler: LoginHandler = GithubLoginHandler.shared, repositoryHandler: RepositoryHandler = GithubRepositoryHandler.shared) {
         self.ui = ui
+        self.loginHandler = loginHandler
+        self.repositoryHandler = repositoryHandler
     }
 
     func loadRepositoriesContent() {
-        if GithubLoginHandler.shared.hasOauthToken() {
-            RepositoryHandler.shared.getRepositories() { repos in
+        if loginHandler.hasOauthToken() {
+            repositoryHandler.getRepositories() { repos in
                 guard let repos = repos else {
-                    return // TODO HANDLE WHEN NO REPO IS RETURNED
+                    // TODO ADD SOME ERROR MESSAGE
+                    self.signUserOut()
+                    return
                 }
                 self.repos = repos
                 self.ui.reloadData()
             }
         } else {
-            GithubLoginHandler.shared.navigateToLoginPage()
+            signUserOut()
         }
     }
 
@@ -39,6 +45,11 @@ class RepositoriesPresenter {
     func formatCell(at index: Int, closure: (Repository)->Void) {
         guard let repos = repos else { return }
         closure(repos[index])
+    }
+
+    private func signUserOut() {
+        loginHandler.clearOauthToken()
+        ui.navigateToSignInScreen()
     }
 }
 

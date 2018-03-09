@@ -10,24 +10,7 @@ import Foundation
 import UIKit
 @testable import GitHubViewer
 
-class TestUserDefaults: DataStore {
-    var setValueForKeyCalled = false
-    var stringForKeyCalled = false
-    var key: String?
-    var value: String?
-
-    func set(_ value: Any?, forKey defaultName: String) {
-        self.key = defaultName
-        self.value = value as? String
-        setValueForKeyCalled = true
-    }
-
-    func string(forKey: String) -> String? {
-        stringForKeyCalled = true
-        key = forKey
-        return value
-    }
-}
+// MARK API HANDLERS MOCK
 
 class TestApiHandler: APIHandler {
     var url: URL?
@@ -56,8 +39,10 @@ class TestLoginHandler: LoginHandler {
     var hasOauthTokenVar = false
     var navigateToLoginPageCalled = false
     var getUserDetailsCalled = false
+    var clearOauthTokenCalled = true
     var url: URL?
     var user: User?
+    var closure: (()->Void)?
 
     func getOauthToken() -> String? {
         return oauthToken
@@ -65,8 +50,12 @@ class TestLoginHandler: LoginHandler {
     func hasOauthToken() -> Bool {
         return hasOauthTokenVar
     }
-    func navigateToLoginPage() {
+    func clearOauthToken() {
+        clearOauthTokenCalled = true
+    }
+    func navigateToLoginPage(closure: @escaping () -> Void) {
         navigateToLoginPageCalled = true
+        closure()
     }
     func getToken(url: URL) {
         self.url = url
@@ -77,12 +66,25 @@ class TestLoginHandler: LoginHandler {
     }
 }
 
+class TestRepositoryHandler: RepositoryHandler {
+    var getRepositoriesCalled = false
+    var repositories: [Repository]?
+
+    func getRepositories(closure: @escaping ([Repository]?) -> ()) {
+        getRepositoriesCalled = true
+        closure(repositories)
+    }
+}
+
+// MARK: UI MOCKS
+
 class TestProfilePageUI: ProfilePageUI {
     var clearAllValuesCalled = false
     var name: String?
     var location: String?
     var company: String?
     var image: UIImage?
+    var navigateToSignInScreenCalled = false
 
     func clearAllValues() {
         clearAllValuesCalled = true
@@ -99,7 +101,62 @@ class TestProfilePageUI: ProfilePageUI {
     func setAvatarImage(image: UIImage?) {
         self.image = image
     }
+    func navigateToSignInScreen() {
+        navigateToSignInScreenCalled = true
+    }
 }
+
+class TestSignInPageUI: SignInPageUI {
+    var navigateToProfilePageCalled = false
+
+    func navigateToProfilePage() {
+        navigateToProfilePageCalled = true
+    }
+}
+
+class TestRepositoriesUI: RepositoriesUI {
+    var reloadDataCalled = false
+    var navigateToSignInScreenCalled = false
+
+    func reloadData() {
+        reloadDataCalled = true
+    }
+
+    func navigateToSignInScreen() {
+        navigateToSignInScreenCalled = true
+    }
+}
+
+// MARK: USERDEFAULTS MOCK
+
+class TestUserDefaults: DataStore {
+    var setValueForKeyCalled = false
+    var stringForKeyCalled = false
+    var removeObjectForKeyCalled = false
+    var key: String?
+    var value: String?
+
+    func set(_ value: Any?, forKey defaultName: String) {
+        setValueForKeyCalled = true
+        key = defaultName
+        self.value = value as? String
+
+    }
+
+    func string(forKey: String) -> String? {
+        stringForKeyCalled = true
+        key = forKey
+        return value
+    }
+
+    func removeObject(forKey defaultName: String) {
+        removeObjectForKeyCalled = true
+        value = nil
+        key = defaultName
+    }
+}
+
+// MARK: UIAPPLICATION MOCK
 
 class TestApplication: Application {
     var url: URL?

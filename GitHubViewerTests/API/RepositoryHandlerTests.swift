@@ -19,7 +19,7 @@ class RepositoryHandlerTests: XCTestCase {
         super.setUp()
         githubApiHandler = TestApiHandler()
         loginHandler = TestLoginHandler()
-        testObject = RepositoryHandler(githubApiHandler: githubApiHandler, loginHandler: loginHandler)
+        testObject = GithubRepositoryHandler(githubApiHandler: githubApiHandler, loginHandler: loginHandler)
         loginHandler.oauthToken = "ABCDE"
     }
 

@@ -10,6 +10,7 @@ import UIKit
 
 protocol RepositoriesUI {
     func reloadData()
+    func navigateToSignInScreen()
 }
 
 class RepositoriesTableViewController: UITableViewController, RepositoriesUI {
@@ -22,8 +23,16 @@ class RepositoriesTableViewController: UITableViewController, RepositoriesUI {
         presenter?.loadRepositoriesContent()
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+
     func reloadData() {
         tableView.reloadData()
+    }
+
+    func navigateToSignInScreen() {
+        navigationController?.popToRootViewController(animated: true)
     }
 
     // MARK: - Table view data source

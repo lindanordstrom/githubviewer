@@ -8,11 +8,15 @@
 
 import Foundation
 
-class RepositoryHandler {
-    static let shared = RepositoryHandler()
+protocol RepositoryHandler {
+    func getRepositories(closure: @escaping ([Repository]?)->())
+}
 
-    var githubApiHandler: APIHandler
-    var loginHandler: LoginHandler
+class GithubRepositoryHandler: RepositoryHandler {
+    static let shared = GithubRepositoryHandler()
+
+    private var githubApiHandler: APIHandler
+    private var loginHandler: LoginHandler
 
     init(githubApiHandler: APIHandler = GithubAPIHandler.shared, loginHandler: LoginHandler = GithubLoginHandler.shared) {
         self.githubApiHandler = githubApiHandler

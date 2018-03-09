@@ -14,6 +14,7 @@ protocol ProfilePageUI {
     func setLocationLabel(text: String?)
     func setCompanyLabel(text: String?)
     func setAvatarImage(image: UIImage?)
+    func navigateToSignInScreen()
 }
 
 class ProfilePageViewController: UIViewController, ProfilePageUI {
@@ -54,12 +55,11 @@ class ProfilePageViewController: UIViewController, ProfilePageUI {
         avatarImageView.image = image ?? #imageLiteral(resourceName: "githubImage")
     }
 
+    func navigateToSignInScreen() {
+        navigationController?.popToRootViewController(animated: true)
+    }
+
     @IBAction func signOutButtonPressed(_ sender: Any) {
-
+        presenter?.signUserOut()
     }
-
-    @IBAction func showRepositoriesButtonPressed(_ sender: Any) {
-
-    }
-
 }

@@ -50,13 +50,13 @@ class ProfilePagePresenterTests: XCTestCase {
 
     // given: oauth token does not exists
     // when: load profile page content is called
-    // then: user should be navigated to githubs login page
+    // then: user should be navigated back to the sign in page
     func testLoadProfilePageContentWhenNoTokenExists() {
         loginHandler.hasOauthTokenVar = false
 
         testObject.loadProfilePageContent()
 
-        XCTAssertTrue(loginHandler.navigateToLoginPageCalled)
+        XCTAssertTrue(profilePageUI.navigateToSignInScreenCalled)
     }
 
     // given: load profile page content is called
@@ -70,5 +70,19 @@ class ProfilePagePresenterTests: XCTestCase {
         XCTAssertEqual(profilePageUI.location, "sweden")
         XCTAssertEqual(profilePageUI.company, "blocket")
         XCTAssertEqual(profilePageUI.image, nil)
+    }
+
+    // given: load profile page content is called
+    // when: no user object is added to the getUserDetails closure
+    // then: oauthToken should be removed
+    // and: user should be navigated back to the sign in page
+    func testLoadProfilePageContentWhenNoUserObjectIsReturned() {
+        loginHandler.hasOauthTokenVar = true
+        loginHandler.user = nil
+
+        testObject.loadProfilePageContent()
+
+        XCTAssertTrue(loginHandler.clearOauthTokenCalled)
+        XCTAssertTrue(profilePageUI.navigateToSignInScreenCalled)
     }
 }

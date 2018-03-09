@@ -11,7 +11,8 @@ import UIKit
 protocol LoginHandler {
     func getOauthToken() -> String?
     func hasOauthToken() -> Bool
-    func navigateToLoginPage()
+    func clearOauthToken()
+    func navigateToLoginPage(closure: @escaping ()->Void)
     func getToken(url: URL)
     func getUserDetails(closure: @escaping (User?)->())
 }
@@ -22,6 +23,7 @@ class GithubLoginHandler: LoginHandler {
     private var dataStore: DataStore
     private var githubApiHandler: APIHandler
     private var application: Application
+    private var accessTokenRecievedClosure: (()->Void)?
 
     init(dataStore: DataStore = UserDefaults.standard, githubApiHandler: APIHandler = GithubAPIHandler.shared, application: Application = UIApplication.shared) {
         self.dataStore = dataStore
@@ -37,7 +39,12 @@ class GithubLoginHandler: LoginHandler {
         return getOauthToken() != nil
     }
 
-    func navigateToLoginPage() {
+    func clearOauthToken() {
+        dataStore.removeObject(forKey: "OauthToken")
+    }
+
+    func navigateToLoginPage(closure: @escaping ()->Void) {
+        accessTokenRecievedClosure = closure
         let urlString = "https://github.com/login/oauth/authorize?client_id=\(GitHubHiddenConstants.clientId)&scope=repo%20user&state=TEST_STATE" // TODO STORE STRINGS
         guard let url = URL(string: urlString) else { return }
         application.open(url, options: [:], completionHandler: nil)
@@ -61,8 +68,9 @@ class GithubLoginHandler: LoginHandler {
         }
 
         let params = ["code": recievedCode]
+        let headers =  ["Accept": "application/json"]
 
-        githubApiHandler.networkRequest(url: getTokenURL, method: .post, parameters: params, headers: nil) { (data, error) in
+        githubApiHandler.networkRequest(url: getTokenURL, method: .post, parameters: params, headers: headers) { (data, error) in
             guard let data = data,
                 error == nil,
                 let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any],
@@ -71,6 +79,7 @@ class GithubLoginHandler: LoginHandler {
                     return
             }
             self.dataStore.set(accessToken, forKey: "OauthToken") // TODO KEYCHAIN
+            self.accessTokenRecievedClosure?()
         }
     }
 

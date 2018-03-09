@@ -52,6 +52,19 @@ class LoginHandlerTests: XCTestCase {
         XCTAssertTrue(dataStore.stringForKeyCalled)
     }
 
+    // given: oauthToken exists
+    // when: calling clearOauthToken
+    // then: the token should be removed
+    func testClearOauthToken() {
+        dataStore.value = "1234"
+
+        testObject.clearOauthToken()
+
+        XCTAssertTrue(dataStore.removeObjectForKeyCalled)
+        XCTAssertNil(dataStore.value)
+        XCTAssertEqual(dataStore.key, "OauthToken")
+    }
+
     // given: oauth token exists in data storage
     // when: calling getOauthToken
     // then: the token value should be returned
@@ -73,7 +86,7 @@ class LoginHandlerTests: XCTestCase {
     // when calling navigateToLoginPage
     // then the correct URL should be opened
     func testNavigateToLoginPage() {
-        testObject.navigateToLoginPage()
+        testObject.navigateToLoginPage() {}
 
         XCTAssertTrue(application.openUrlCalled)
         XCTAssertEqual(application.url, URL(string: "https://github.com/login/oauth/authorize?client_id=\(GitHubHiddenConstants.clientId)&scope=repo%20user&state=TEST_STATE"))
@@ -96,6 +109,16 @@ class LoginHandlerTests: XCTestCase {
         testObject.getToken(url: URL(string: "test://?test=12345")!)
 
         XCTAssertFalse(githubApiHandler.networkRequestWasCalled)
+    }
+
+    // given: get token is called with an url with a code
+    // when: data is returned with an access token
+    // then: the access token is set in the data store
+    func testGetTokenWithCodeDataReturnedWithAccessToken() {
+        let userDict = ["access_token":"testtest"]
+        githubApiHandler.data = try? JSONEncoder().encode(userDict)
+        testObject.getToken(url: URL(string: "test://?code=12345")!)
+        XCTAssertEqual(dataStore.value, "testtest")
     }
 
     // given: oauth token exists
