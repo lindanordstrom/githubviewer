@@ -8,6 +8,10 @@
 
 import Foundation
 
+
+// Note:
+// The user object needs to conform to NSObject and NSCoding to be able
+// to be stored in UserDefaults
 class User: NSObject, Codable, NSCoding {
     var login: String?
     var name: String?

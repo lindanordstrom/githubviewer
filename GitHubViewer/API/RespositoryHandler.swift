@@ -24,6 +24,9 @@ class GithubRepositoryHandler: RepositoryHandler {
         self.loginHandler = loginHandler
     }
 
+    // Note:
+    // Fetches the repositories for the signed in user and filter out any repositories that are not owned by the user
+    // The fetched repositories are then sent through the closure
     func getRepositories(closure: @escaping ([Repository]?)->()) {
         guard let oauthToken = loginHandler.getOauthToken(),
             let url = URL(string: "https://api.github.com/user/repos") else {
@@ -48,6 +51,9 @@ class GithubRepositoryHandler: RepositoryHandler {
         }
     }
 
+    // Note:
+    // Fetches the commits made for a specific repository
+    // The commits are then sent through the closure
     func getCommits(for repo: String, closure: @escaping ([Commit]?) -> ()) {
         guard let oauthToken = loginHandler.getOauthToken(),
             let username = loginHandler.getSignedInUser()?.login,

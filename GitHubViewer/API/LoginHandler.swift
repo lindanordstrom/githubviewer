@@ -50,6 +50,10 @@ class GithubLoginHandler: LoginHandler {
         return NSKeyedUnarchiver.unarchiveObject(with: userAsData) as? User
     }
 
+    // NOTE:
+    // Opens the web browser and lets the user sign in via githubs web flow
+    // when app is relaunched the appDelegate should receive an URL with a token
+    // and call the loginhandlers getToken function
     func navigateToLoginPage(closure: @escaping ()->Void) {
         accessTokenRecievedClosure = closure
         let urlString = "https://github.com/login/oauth/authorize?client_id=\(GitHubHiddenConstants.clientId)&scope=repo%20user&state=TEST_STATE" // TODO STORE STRINGS
@@ -68,13 +72,17 @@ class GithubLoginHandler: LoginHandler {
         return nil
     }
 
+    // Note:
+    // Will be called from AppDelegate when app is relaunched from githubs webflow
+    // Fetches the access token based on the code received in the URL
+    // Sets the access token in UserDefaults
     func getToken(url: URL) {
         guard let recievedCode = getCodeFrom(url: url),
             let getTokenURL = URL(string: "https://github.com/login/oauth/access_token") else {
                 return // TODO HANDLE ERROR
         }
 
-        let params = ["code": recievedCode]
+        let params = ["code": recievedCode, "client_id": GitHubHiddenConstants.clientId, "client_secret": GitHubHiddenConstants.clientSecret]
         let headers =  ["Accept": "application/json"]
 
         githubApiHandler.networkRequest(url: getTokenURL, method: .post, parameters: params, headers: headers) { (data, error) in
@@ -90,6 +98,9 @@ class GithubLoginHandler: LoginHandler {
         }
     }
 
+    // Note:
+    // Fetches the user details from the user connected to the access token
+    // Sets the signed in user in UserDefaults and the user is then sent through the closure
     func getUserDetails(closure: @escaping (User?)->()) {
         guard let oauthToken = getOauthToken(),
             let url = URL(string: "https://api.github.com/user") else {

@@ -15,17 +15,15 @@ protocol APIHandler {
     func networkRequest(url: URL, method: RequestMethod, parameters: [String: Any]?, headers: [String: String]?, closure: @escaping ((Data?, Error? ) -> Void))
 }
 
+// Note:
+// The Accept header will always be set to application/vnd.github.v3+json
+// unless explicitly specified in the headers parameter
 class GithubAPIHandler: APIHandler {
     static let shared = GithubAPIHandler()
 
-    private let clientId = GitHubHiddenConstants.clientId
-    private let clientSecret = GitHubHiddenConstants.clientSecret
-
     func networkRequest(url: URL, method: RequestMethod, parameters: [String: Any]?, headers: [String: String]?, closure: @escaping ((Data?, Error? ) -> Void)) {
-        var parameters = parameters ?? [:]
-        let headers = headers ?? ["Accept":"application/vnd.github.v3+json"]
-        parameters["client_id"] = GitHubHiddenConstants.clientId
-        parameters["client_secret"] = GitHubHiddenConstants.clientSecret
+        var headers = headers ?? [:]
+        headers["Accept"] = headers["Accept"] ?? "application/vnd.github.v3+json"
 
         Alamofire.request(url, method: method, parameters: parameters, headers: headers).responseData { response in
             switch response.result {

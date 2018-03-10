@@ -119,7 +119,7 @@ class LoginHandlerTests: XCTestCase {
         testObject.getToken(url: URL(string: "test://?code=12345")!)
 
         XCTAssertEqual(githubApiHandler.url?.absoluteString, "https://github.com/login/oauth/access_token")
-        XCTAssertEqual(githubApiHandler.parameters as! [String: String], ["code": "12345"])
+        XCTAssertEqual(githubApiHandler.parameters as! [String: String], ["code": "12345", "client_secret": GitHubHiddenConstants.clientSecret, "client_id": GitHubHiddenConstants.clientId])
         XCTAssertTrue(githubApiHandler.networkRequestWasCalled)
     }
 
