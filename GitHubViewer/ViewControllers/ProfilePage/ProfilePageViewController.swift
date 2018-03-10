@@ -9,7 +9,9 @@
 import UIKit
 
 protocol ProfilePageUI {
+    func toggleSpinner(on: Bool)
     func clearAllValues()
+    func showButton()
     func setNameLabel(text: String?)
     func setLocationLabel(text: String?)
     func setCompanyLabel(text: String?)
@@ -20,11 +22,13 @@ protocol ProfilePageUI {
 class ProfilePageViewController: UIViewController, ProfilePageUI {
 
     private var presenter: ProfilePagePresenter?
+    private let spinner = UIActivityIndicatorView.init(activityIndicatorStyle: .whiteLarge)
 
     @IBOutlet weak var avatarImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var companyLabel: UILabel!
+    @IBOutlet weak var showRepositoriesButton: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,11 +37,27 @@ class ProfilePageViewController: UIViewController, ProfilePageUI {
         navigationItem.setHidesBackButton(true, animated: false)
     }
 
+    func toggleSpinner(on: Bool) {
+        if on {
+            spinner.startAnimating()
+            spinner.center = view.center
+            view.addSubview(spinner)
+        } else {
+            spinner.stopAnimating()
+            spinner.removeFromSuperview()
+        }
+    }
+
     func clearAllValues() {
         nameLabel.text = ""
         locationLabel.text = ""
         companyLabel.text = ""
-        avatarImageView.image = #imageLiteral(resourceName: "githubImage")
+        avatarImageView.image = nil
+        showRepositoriesButton.isHidden = true
+    }
+
+    func showButton() {
+        showRepositoriesButton.isHidden = false
     }
 
     func setNameLabel(text: String?) {

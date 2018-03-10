@@ -169,6 +169,7 @@
                         <outlet property="companyLabel" destination="QvC-zM-Csd" id="cjm-eg-hwQ"/>
                         <outlet property="locationLabel" destination="9Ik-UL-SgS" id="zU6-bz-Tsq"/>
                         <outlet property="nameLabel" destination="6eC-hA-MTL" id="pAV-wP-5RJ"/>
+                        <outlet property="showRepositoriesButton" destination="6De-MF-EkQ" id="F5x-Gk-Ald"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

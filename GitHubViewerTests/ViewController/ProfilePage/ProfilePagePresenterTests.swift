@@ -31,10 +31,12 @@ class ProfilePagePresenterTests: XCTestCase {
 
     // when: load profile page content is called
     // then: all content should be cleared
+    // and: the spinner should be toggled on
     func testLoadProfilePageContent() {
         testObject.loadProfilePageContent()
 
         XCTAssertTrue(profilePageUI.clearAllValuesCalled)
+        XCTAssertTrue(profilePageUI.spinnerToggled ?? false)
     }
 
     // given: oauth token exists
@@ -62,6 +64,7 @@ class ProfilePagePresenterTests: XCTestCase {
     // given: load profile page content is called
     // when: a valid user object is added to the getUserDetails closure
     // then: relevant UI parts should be updated
+    // and: the spinner should be toggled off
     func testLoadProfilePageContentWhenUserObjectIsReturned() {
         loginHandler.hasOauthTokenVar = true
         loginHandler.user = User(login: "lindanordstrom", name: "linda", avatar_url: nil, location: "sweden", company: "blocket")
@@ -70,6 +73,9 @@ class ProfilePagePresenterTests: XCTestCase {
         XCTAssertEqual(profilePageUI.location, "sweden")
         XCTAssertEqual(profilePageUI.company, "blocket")
         XCTAssertEqual(profilePageUI.image, nil)
+        XCTAssertTrue(profilePageUI.showButtonCalled)
+        XCTAssertFalse(profilePageUI.spinnerToggled ?? true)
+
     }
 
     // given: load profile page content is called

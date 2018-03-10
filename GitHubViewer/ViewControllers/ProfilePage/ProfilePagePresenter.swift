@@ -21,6 +21,7 @@ class ProfilePagePresenter {
 
     func loadProfilePageContent() {
         ui.clearAllValues()
+        ui.toggleSpinner(on: true)
         if loginHandler.hasOauthToken() {
             loginHandler.getUserDetails() { user in
                 guard let user = user else {
@@ -32,6 +33,8 @@ class ProfilePagePresenter {
                 self.ui.setLocationLabel(text: user.location)
                 self.ui.setCompanyLabel(text: user.company)
                 self.ui.setAvatarImage(image: self.getImageFrom(urlString: user.avatar_url))
+                self.ui.showButton()
+                self.ui.toggleSpinner(on: false)
             }
         } else {
             signUserOut()

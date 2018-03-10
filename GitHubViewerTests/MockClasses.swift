@@ -97,9 +97,17 @@ class TestProfilePageUI: ProfilePageUI {
     var company: String?
     var image: UIImage?
     var navigateToSignInScreenCalled = false
+    var showButtonCalled = true
+    var spinnerToggled: Bool?
 
+    func toggleSpinner(on: Bool) {
+        spinnerToggled = on
+    }
     func clearAllValues() {
         clearAllValuesCalled = true
+    }
+    func showButton() {
+        showButtonCalled = true
     }
     func setNameLabel(text: String?) {
         name = text
