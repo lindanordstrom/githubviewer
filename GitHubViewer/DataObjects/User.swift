@@ -15,6 +15,14 @@ class User: NSObject, Codable, NSCoding {
     var location: String?
     var company: String?
 
+    init(login: String?, name: String?, avatar_url: String?, location: String?, company: String?) {
+        self.login = login
+        self.name = name
+        self.avatar_url = avatar_url
+        self.location = location
+        self.company = company
+    }
+
     required init?(coder aDecoder: NSCoder) {
         login = aDecoder.decodeObject(forKey: "login") as? String
         name = aDecoder.decodeObject(forKey: "name") as? String

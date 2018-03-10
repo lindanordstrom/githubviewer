@@ -40,6 +40,7 @@ class TestLoginHandler: LoginHandler {
     var navigateToLoginPageCalled = false
     var getUserDetailsCalled = false
     var clearUserDetailsCalled = true
+    var getSignedInUserCalled = true
     var url: URL?
     var user: User?
     var closure: (()->Void)?
@@ -52,6 +53,10 @@ class TestLoginHandler: LoginHandler {
     }
     func clearUserDetails() {
         clearUserDetailsCalled = true
+    }
+    func getSignedInUser() -> User? {
+        getSignedInUserCalled = true
+        return user
     }
     func navigateToLoginPage(closure: @escaping () -> Void) {
         navigateToLoginPageCalled = true
@@ -68,11 +73,18 @@ class TestLoginHandler: LoginHandler {
 
 class TestRepositoryHandler: RepositoryHandler {
     var getRepositoriesCalled = false
+    var getCommitsCalled = false
     var repositories: [Repository]?
+    var commits: [Commit]?
 
     func getRepositories(closure: @escaping ([Repository]?) -> ()) {
         getRepositoriesCalled = true
         closure(repositories)
+    }
+
+    func getCommits(for repo: String, closure: @escaping ([Commit]?) -> ()) {
+        getCommitsCalled = true
+        closure(commits)
     }
 }
 
@@ -127,32 +139,39 @@ class TestRepositoriesUI: RepositoriesUI {
     }
 }
 
+class TestCommitsUI: CommitsUI {
+    var reloadDataCalled = false
+    var navigateToSignInScreenCalled = false
+
+    func reloadData() {
+        reloadDataCalled = true
+    }
+
+    func navigateToSignInScreen() {
+        navigateToSignInScreenCalled = true
+    }
+}
+
 // MARK: USERDEFAULTS MOCK
 
 class TestUserDefaults: DataStore {
     var setValueForKeyCalled = false
-    var stringForKeyCalled = false
+    var objectForKeyCalled = false
     var removeObjectForKeyCalled = false
-    var key: String?
-    var value: String?
+    var keyValue: [String: Any?] = [:]
 
     func set(_ value: Any?, forKey defaultName: String) {
         setValueForKeyCalled = true
-        key = defaultName
-        self.value = value as? String
-
+        keyValue[defaultName] = value
     }
-
-    func string(forKey: String) -> String? {
-        stringForKeyCalled = true
-        key = forKey
-        return value
-    }
-
     func removeObject(forKey defaultName: String) {
         removeObjectForKeyCalled = true
-        value = nil
-        key = defaultName
+        keyValue[defaultName] = nil
+    }
+
+    func object(forKey defaultName: String) -> Any? {
+        objectForKeyCalled = true
+        return keyValue[defaultName] ?? nil
     }
 }
 

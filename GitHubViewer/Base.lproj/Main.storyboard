@@ -85,7 +85,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="756"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kL6-qW-app">
-                                <rect key="frame" x="94" y="219" width="226" height="318"/>
+                                <rect key="frame" x="94" y="80" width="226" height="318"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="githubImage" translatesAutoresizingMaskIntoConstraints="NO" id="fvh-qz-ZEY">
                                         <rect key="frame" x="64" y="0.0" width="99" height="105"/>
@@ -147,7 +147,7 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="kL6-qW-app" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="BWy-tK-j4w"/>
+                            <constraint firstItem="kL6-qW-app" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="60" id="MCY-Hc-LWa"/>
                             <constraint firstItem="Mhe-OM-P52" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Ywn-Lp-f6p"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="top" secondItem="Mhe-OM-P52" secondAttribute="top" constant="20" id="abP-eS-gMt"/>
                             <constraint firstItem="kL6-qW-app" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="evp-F0-DfX"/>
@@ -157,8 +157,8 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="My Profile" id="E5T-8o-p0k">
-                        <barButtonItem key="backBarButtonItem" title="Back" id="NaN-lj-qKV"/>
-                        <barButtonItem key="leftBarButtonItem" title="Sign Out" id="Vop-me-V2m">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="Hkl-3e-USG"/>
+                        <barButtonItem key="rightBarButtonItem" title="Sign Out" id="Vop-me-V2m">
                             <connections>
                                 <action selector="signOutButtonPressed:" destination="BYZ-38-t0r" id="6wo-vq-9HZ"/>
                             </connections>
@@ -330,13 +330,13 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="USA-PI-gie">
-                                            <rect key="frame" x="82.666666666666657" y="25" width="315.33333333333337" height="18"/>
+                                            <rect key="frame" x="81.666666666666657" y="25" width="316.33333333333337" height="18"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date on multiple lines" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tM6-5G-aZh">
-                                            <rect key="frame" x="16" y="18.333333333333336" width="63" height="31.333333333333336"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tM6-5G-aZh">
+                                            <rect key="frame" x="15.999999999999996" y="26.333333333333329" width="62.666666666666657" height="16"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
@@ -344,11 +344,11 @@
                                     </subviews>
                                     <color key="backgroundColor" white="1" alpha="0.3243792808" colorSpace="calibratedWhite"/>
                                     <constraints>
-                                        <constraint firstItem="USA-PI-gie" firstAttribute="width" secondItem="F5w-0t-2Yc" secondAttribute="width" multiplier="0.8" constant="-16" id="38b-QI-v3h"/>
                                         <constraint firstItem="tM6-5G-aZh" firstAttribute="leading" secondItem="F5w-0t-2Yc" secondAttribute="leading" constant="16" id="4sd-aV-8dE"/>
                                         <constraint firstItem="tM6-5G-aZh" firstAttribute="centerY" secondItem="F5w-0t-2Yc" secondAttribute="centerY" id="6lp-ii-plh"/>
                                         <constraint firstItem="tM6-5G-aZh" firstAttribute="width" secondItem="F5w-0t-2Yc" secondAttribute="width" multiplier="0.19" constant="-16" id="8IT-0r-X6T"/>
                                         <constraint firstAttribute="trailing" secondItem="USA-PI-gie" secondAttribute="trailing" constant="16" id="b8I-if-QeP"/>
+                                        <constraint firstItem="USA-PI-gie" firstAttribute="leading" secondItem="tM6-5G-aZh" secondAttribute="trailing" constant="3.6666666666666572" id="nkA-Ol-EOd"/>
                                         <constraint firstItem="USA-PI-gie" firstAttribute="centerY" secondItem="F5w-0t-2Yc" secondAttribute="centerY" id="wDm-nD-dVo"/>
                                     </constraints>
                                 </tableViewCellContentView>

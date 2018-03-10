@@ -59,7 +59,7 @@ class RepositoryListPresenterTests: XCTestCase {
     // then: the UI should be reloaded
     func testLoadRepositoriesContentWhenRepositoryObjectsAreReturned() {
         loginHandler.hasOauthTokenVar = true
-        repositoryHandler.repositories = [Repository(name: "testRepo", language: "swift", stargazers_count: 5, watchers_count: 3, forks: 2)]
+        repositoryHandler.repositories = [Repository(name: "testRepo", language: "swift", stargazers_count: 5, watchers_count: 3, forks: 2, owner: Owner(login: "lindanordstrom"))]
         testObject.loadRepositoriesContent()
         XCTAssertTrue(repositoriesUI.reloadDataCalled)
     }
@@ -95,7 +95,7 @@ class RepositoryListPresenterTests: XCTestCase {
     // then: 1 is returned
     func testNumberOfRepositories() {
         loginHandler.hasOauthTokenVar = true
-        repositoryHandler.repositories = [Repository(name: "testRepo", language: "swift", stargazers_count: 5, watchers_count: 3, forks: 2)]
+        repositoryHandler.repositories = [Repository(name: "testRepo", language: "swift", stargazers_count: 5, watchers_count: 3, forks: 2, owner: Owner(login: "lindanordstrom"))]
         testObject.loadRepositoriesContent()
 
         XCTAssertEqual(testObject.numberOfRepositories(), 1)
@@ -116,8 +116,8 @@ class RepositoryListPresenterTests: XCTestCase {
     func testFormatCell() {
         loginHandler.hasOauthTokenVar = true
         let exp = expectation(description: "closure called")
-        let repo1 = Repository(name: "testRepo", language: "Swift", stargazers_count: 0, watchers_count: 0, forks: 0)
-        let repo2 = Repository(name: "testRepo2", language: "Swift", stargazers_count: 0, watchers_count: 0, forks: 0)
+        let repo1 = Repository(name: "testRepo", language: "Swift", stargazers_count: 0, watchers_count: 0, forks: 0, owner: Owner(login: "lindanordstrom"))
+        let repo2 = Repository(name: "testRepo2", language: "Swift", stargazers_count: 0, watchers_count: 0, forks: 0, owner: Owner(login: "lindanordstrom"))
         repositoryHandler.repositories = [repo1, repo2]
         testObject.loadRepositoriesContent()
 
@@ -129,6 +129,19 @@ class RepositoryListPresenterTests: XCTestCase {
         waitForExpectations(timeout: 1) { error in
             if error != nil { XCTFail() }
         }
+    }
+
+    // given: multiple repositories exists
+    // when: asked for the name of a selected repository
+    // then: the name should be returned
+    func testGetSelectedRepositoryName() {
+        loginHandler.hasOauthTokenVar = true
+        let repo1 = Repository(name: "testRepo", language: "Swift", stargazers_count: 0, watchers_count: 0, forks: 0, owner: Owner(login: "lindanordstrom"))
+        let repo2 = Repository(name: "testRepo2", language: "Swift", stargazers_count: 0, watchers_count: 0, forks: 0, owner: Owner(login: "lindanordstrom"))
+        repositoryHandler.repositories = [repo1, repo2]
+        testObject.loadRepositoriesContent()
+
+        XCTAssertEqual(testObject.getSelectedRepositoryName(index: 1), "testRepo2")
     }
 }
 

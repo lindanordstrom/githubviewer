@@ -2,7 +2,7 @@
 //  TableViewCell.swift
 //  GitHubViewer
 //
-//  Created by Yaser on 2018-03-08.
+//  Created by Linda on 2018-03-08.
 //  Copyright © 2018 LindaCCNordstrom. All rights reserved.
 //
 

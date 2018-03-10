@@ -30,6 +30,7 @@ class ProfilePageViewController: UIViewController, ProfilePageUI {
         super.viewDidLoad()
         presenter = ProfilePagePresenter(ui: self)
         presenter?.loadProfilePageContent()
+        navigationItem.setHidesBackButton(true, animated: false)
     }
 
     func clearAllValues() {

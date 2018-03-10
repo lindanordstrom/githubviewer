@@ -36,51 +36,71 @@ class LoginHandlerTests: XCTestCase {
     // when: calling hasOauthToken
     // then: TRUE should be returned
     func testHasOauthTokenWhenTokenExists() {
-        dataStore.value = "1234"
+        dataStore.keyValue[Constants.UserDefaultsConstants.oauthToken] = "1234"
 
         XCTAssertTrue(testObject.hasOauthToken())
-        XCTAssertTrue(dataStore.stringForKeyCalled)
+        XCTAssertTrue(dataStore.objectForKeyCalled)
     }
 
     // given: oauth token does not exists in data storage
     // when: calling hasOauthToken
     // then: FALSE should be returned
     func testHasOauthTokenWhenNoTokenExists() {
-        dataStore.value = nil
+        dataStore.keyValue[Constants.UserDefaultsConstants.oauthToken] = nil
 
         XCTAssertFalse(testObject.hasOauthToken())
-        XCTAssertTrue(dataStore.stringForKeyCalled)
+        XCTAssertTrue(dataStore.objectForKeyCalled)
     }
 
-    // given: oauthToken exists
+    // given: oauthToken and user exists
     // when: calling clearUserDetails
-    // then: the token should be removed
+    // then: the token and user should be removed
     func testClearUserDetails() {
-        dataStore.value = "1234"
+        dataStore.keyValue[Constants.UserDefaultsConstants.oauthToken] = "1234"
+        dataStore.keyValue[Constants.UserDefaultsConstants.signedInUser] = User(login: "lindanordstrom", name: nil, avatar_url: nil, location: nil, company: nil)
 
         testObject.clearUserDetails()
 
         XCTAssertTrue(dataStore.removeObjectForKeyCalled)
-        XCTAssertNil(dataStore.value)
-        XCTAssertEqual(dataStore.key, "OauthToken")
+        XCTAssertNil(dataStore.keyValue[Constants.UserDefaultsConstants.oauthToken] ?? nil)
+        XCTAssertNil(dataStore.keyValue[Constants.UserDefaultsConstants.signedInUser] ?? nil)
     }
 
     // given: oauth token exists in data storage
     // when: calling getOauthToken
     // then: the token value should be returned
     func testGetOauthTokenWhenTokenExists() {
-        dataStore.value = "1234"
+        dataStore.keyValue[Constants.UserDefaultsConstants.oauthToken] = "1234"
 
-        XCTAssertEqual(testObject.getOauthToken(), dataStore.value)
+        XCTAssertEqual(testObject.getOauthToken(), "1234")
     }
 
     // given: oauth token does not exists in data storage
     // when: calling getOauthToken
     // then: nil should be returned
     func testGetOauthTokenWhenNoTokenExists() {
-        dataStore.value = nil
+        dataStore.keyValue[Constants.UserDefaultsConstants.oauthToken] = nil
 
         XCTAssertNil(testObject.getOauthToken())
+    }
+
+    // given: user exists in data storage
+    // when: calling getSignedInUser
+    // then: the user should be returned
+    func testGetSignedInUserWhenUserExists() {
+        let user = User(login: "lindanordstrom", name: nil, avatar_url: nil, location: nil, company: nil)
+        dataStore.keyValue[Constants.UserDefaultsConstants.signedInUser] = NSKeyedArchiver.archivedData(withRootObject: user)
+
+        XCTAssertEqual(testObject.getSignedInUser()?.login, user.login)
+    }
+
+    // given: user does not exists in data storage
+    // when: calling getSignedInUser
+    // then: nil should be returned
+    func testGetSignedInUserWhenNoUserExists() {
+        dataStore.keyValue[Constants.UserDefaultsConstants.signedInUser] = nil
+
+        XCTAssertNil(testObject.getSignedInUser())
     }
 
     // when calling navigateToLoginPage
@@ -118,14 +138,14 @@ class LoginHandlerTests: XCTestCase {
         let userDict = ["access_token":"testtest"]
         githubApiHandler.data = try? JSONEncoder().encode(userDict)
         testObject.getToken(url: URL(string: "test://?code=12345")!)
-        XCTAssertEqual(dataStore.value, "testtest")
+        XCTAssertEqual(dataStore.keyValue[Constants.UserDefaultsConstants.oauthToken] as? String, "testtest")
     }
 
     // given: oauth token exists
     // when: get user details is called
     // then: a fetch call is made to the API handler
     func testGetUserDetailsWhenOauthTokenExists() {
-        dataStore.value = "ABCDE"
+        dataStore.keyValue[Constants.UserDefaultsConstants.oauthToken] = "ABCDE"
         testObject.getUserDetails { _ in }
 
         XCTAssertEqual(githubApiHandler.url?.absoluteString, "https://api.github.com/user")
@@ -137,7 +157,7 @@ class LoginHandlerTests: XCTestCase {
     // when: get user details is called
     // then: no fetch call is made to the API handler
     func testGetUserDetailsWhenNoOauthTokenExists() {
-        dataStore.value = nil
+        dataStore.keyValue[Constants.UserDefaultsConstants.oauthToken] = nil
         testObject.getUserDetails { _ in }
 
         XCTAssertFalse(githubApiHandler.networkRequestWasCalled)
@@ -147,7 +167,7 @@ class LoginHandlerTests: XCTestCase {
     // when: data is returned that matches the user object
     // then: the closure is called with the created  user
     func testGetUserDetailsDataRetunedAsUser() {
-        dataStore.value = "ABCDE"
+        dataStore.keyValue[Constants.UserDefaultsConstants.oauthToken] = "ABCDE"
         let exp = expectation(description: "closure called")
 
         let userDict = ["name":"Linda Nordstrom", "location": "Sweden"]
@@ -168,7 +188,7 @@ class LoginHandlerTests: XCTestCase {
     // when: data is returned that does not match the user object
     // then: the closure is called without any user object
     func testGetUserDetailsWrongDataReturned() {
-        dataStore.value = "ABCDE"
+        dataStore.keyValue[Constants.UserDefaultsConstants.oauthToken] = "ABCDE"
         let exp = expectation(description: "closure called")
 
         let userDict = ["name":123]
@@ -188,7 +208,7 @@ class LoginHandlerTests: XCTestCase {
     // when: error is returned
     // then: the closure is called without any user object
     func testGetUserDetailsWithError() {
-        dataStore.value = "ABCDE"
+        dataStore.keyValue[Constants.UserDefaultsConstants.oauthToken] = "ABCDE"
         let exp = expectation(description: "closure called")
 
         githubApiHandler.error = NSError(domain: "test", code: 1, userInfo: nil)

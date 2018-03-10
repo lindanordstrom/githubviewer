@@ -33,7 +33,7 @@ class GithubLoginHandler: LoginHandler {
     }
 
     func getOauthToken() -> String? {
-        return dataStore.object(forKey: "OauthToken") as? String
+        return dataStore.object(forKey: Constants.UserDefaultsConstants.oauthToken) as? String
     }
 
     func hasOauthToken() -> Bool {
@@ -41,12 +41,12 @@ class GithubLoginHandler: LoginHandler {
     }
 
     func clearUserDetails() {
-        dataStore.removeObject(forKey: "OauthToken")
-        dataStore.removeObject(forKey: "SignedInUser")
+        dataStore.removeObject(forKey: Constants.UserDefaultsConstants.oauthToken)
+        dataStore.removeObject(forKey: Constants.UserDefaultsConstants.signedInUser)
     }
 
     func getSignedInUser() -> User? {
-        guard let userAsData = dataStore.object(forKey: "SignedInUser") as? Data else { return nil }
+        guard let userAsData = dataStore.object(forKey: Constants.UserDefaultsConstants.signedInUser) as? Data else { return nil }
         return NSKeyedUnarchiver.unarchiveObject(with: userAsData) as? User
     }
 
@@ -85,7 +85,7 @@ class GithubLoginHandler: LoginHandler {
                     print(error?.localizedDescription ?? "error fetching data") // TODO HANDLE ERROR
                     return
             }
-            self.dataStore.set(accessToken, forKey: "OauthToken") // TODO KEYCHAIN
+            self.dataStore.set(accessToken, forKey: Constants.UserDefaultsConstants.oauthToken) // TODO KEYCHAIN
             self.accessTokenRecievedClosure?()
         }
     }
@@ -108,7 +108,7 @@ class GithubLoginHandler: LoginHandler {
                     return
             }
             let userAsData = NSKeyedArchiver.archivedData(withRootObject: user)
-            self.dataStore.set(userAsData, forKey: "SignedInUser")
+            self.dataStore.set(userAsData, forKey: Constants.UserDefaultsConstants.signedInUser)
             closure(user)
         }
     }
