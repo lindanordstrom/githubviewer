@@ -64,7 +64,7 @@ class ProfilePagePresenterTests: XCTestCase {
     // then: relevant UI parts should be updated
     func testLoadProfilePageContentWhenUserObjectIsReturned() {
         loginHandler.hasOauthTokenVar = true
-        loginHandler.user = User(name: "linda", avatar_url: nil, location: "sweden", company: "blocket")
+        loginHandler.user = User(login: "lindanordstrom", name: "linda", avatar_url: nil, location: "sweden", company: "blocket")
         testObject.loadProfilePageContent()
         XCTAssertEqual(profilePageUI.name, "linda")
         XCTAssertEqual(profilePageUI.location, "sweden")
@@ -82,7 +82,7 @@ class ProfilePagePresenterTests: XCTestCase {
 
         testObject.loadProfilePageContent()
 
-        XCTAssertTrue(loginHandler.clearOauthTokenCalled)
+        XCTAssertTrue(loginHandler.clearUserDetailsCalled)
         XCTAssertTrue(profilePageUI.navigateToSignInScreenCalled)
     }
 }

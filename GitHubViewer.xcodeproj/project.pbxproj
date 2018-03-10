@@ -29,6 +29,10 @@
 		4344889C2050106D0056E9C6 /* 326FB1C1-80F2-38BD-9DCD-1EA3AEE07286.bcsymbolmap in Resources */ = {isa = PBXBuildFile; fileRef = 4344877D2050106D0056E9C6 /* 326FB1C1-80F2-38BD-9DCD-1EA3AEE07286.bcsymbolmap */; };
 		4344889D2050106D0056E9C6 /* 61AD780B-3231-3BAD-A9AC-13954513F7D2.bcsymbolmap in Resources */ = {isa = PBXBuildFile; fileRef = 4344877E2050106D0056E9C6 /* 61AD780B-3231-3BAD-A9AC-13954513F7D2.bcsymbolmap */; };
 		4344889F2050106D0056E9C6 /* Alamofire.framework.dSYM in Resources */ = {isa = PBXBuildFile; fileRef = 434487802050106D0056E9C6 /* Alamofire.framework.dSYM */; };
+		435C914E2053F4C70078D9C3 /* CommitsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435C914D2053F4C70078D9C3 /* CommitsTableViewController.swift */; };
+		435C91502053F50F0078D9C3 /* CommitsListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435C914F2053F50F0078D9C3 /* CommitsListPresenter.swift */; };
+		435C91522053F5520078D9C3 /* Commit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435C91512053F5520078D9C3 /* Commit.swift */; };
+		435C91542053FE810078D9C3 /* CommitsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 435C91532053FE810078D9C3 /* CommitsTableViewCell.swift */; };
 		439D26842051A345005434C2 /* ProfilePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439D26832051A345005434C2 /* ProfilePageViewController.swift */; };
 		439D26882051A406005434C2 /* RepositoriesPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439D26872051A406005434C2 /* RepositoriesPresenter.swift */; };
 		439D268A2051A416005434C2 /* ProfilePagePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 439D26892051A416005434C2 /* ProfilePagePresenter.swift */; };
@@ -91,6 +95,10 @@
 		4344877E2050106D0056E9C6 /* 61AD780B-3231-3BAD-A9AC-13954513F7D2.bcsymbolmap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "61AD780B-3231-3BAD-A9AC-13954513F7D2.bcsymbolmap"; sourceTree = "<group>"; };
 		4344877F2050106D0056E9C6 /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Alamofire.framework; sourceTree = "<group>"; };
 		434487802050106D0056E9C6 /* Alamofire.framework.dSYM */ = {isa = PBXFileReference; lastKnownFileType = wrapper.dsym; path = Alamofire.framework.dSYM; sourceTree = "<group>"; };
+		435C914D2053F4C70078D9C3 /* CommitsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitsTableViewController.swift; sourceTree = "<group>"; };
+		435C914F2053F50F0078D9C3 /* CommitsListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitsListPresenter.swift; sourceTree = "<group>"; };
+		435C91512053F5520078D9C3 /* Commit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Commit.swift; sourceTree = "<group>"; };
+		435C91532053FE810078D9C3 /* CommitsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitsTableViewCell.swift; sourceTree = "<group>"; };
 		439D26832051A345005434C2 /* ProfilePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePageViewController.swift; sourceTree = "<group>"; };
 		439D26872051A406005434C2 /* RepositoriesPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoriesPresenter.swift; sourceTree = "<group>"; };
 		439D26892051A416005434C2 /* ProfilePagePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePagePresenter.swift; sourceTree = "<group>"; };
@@ -138,6 +146,7 @@
 			children = (
 				432BB8C920504D0600FF7568 /* User.swift */,
 				432BB8CB20504D1300FF7568 /* Repository.swift */,
+				435C91512053F5520078D9C3 /* Commit.swift */,
 			);
 			path = DataObjects;
 			sourceTree = "<group>";
@@ -172,8 +181,9 @@
 			isa = PBXGroup;
 			children = (
 				439D269620529423005434C2 /* SignInPage */,
-				439D26862051A3DE005434C2 /* RepositoryList */,
 				439D26852051A3D8005434C2 /* ProfilePage */,
+				439D26862051A3DE005434C2 /* RepositoryList */,
+				435C914C2053F48A0078D9C3 /* CommitList */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -267,6 +277,16 @@
 				434487802050106D0056E9C6 /* Alamofire.framework.dSYM */,
 			);
 			path = iOS;
+			sourceTree = "<group>";
+		};
+		435C914C2053F48A0078D9C3 /* CommitList */ = {
+			isa = PBXGroup;
+			children = (
+				435C914D2053F4C70078D9C3 /* CommitsTableViewController.swift */,
+				435C914F2053F50F0078D9C3 /* CommitsListPresenter.swift */,
+				435C91532053FE810078D9C3 /* CommitsTableViewCell.swift */,
+			);
+			path = CommitList;
 			sourceTree = "<group>";
 		};
 		439D26852051A3D8005434C2 /* ProfilePage */ = {
@@ -440,20 +460,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				435C91542053FE810078D9C3 /* CommitsTableViewCell.swift in Sources */,
 				432BB8D5205099C700FF7568 /* Application.swift in Sources */,
 				432BB8CC20504D1300FF7568 /* Repository.swift in Sources */,
 				432BB8C720504C8200FF7568 /* RespositoryHandler.swift in Sources */,
 				432BB8C320504C5800FF7568 /* APIHandler.swift in Sources */,
+				435C91522053F5520078D9C3 /* Commit.swift in Sources */,
 				439D26842051A345005434C2 /* ProfilePageViewController.swift in Sources */,
 				439D26952051D90F005434C2 /* RepositoriesTableViewCell.swift in Sources */,
 				432BB8CA20504D0600FF7568 /* User.swift in Sources */,
 				43448758204FFE570056E9C6 /* AppDelegate.swift in Sources */,
 				432BB8C520504C6B00FF7568 /* LoginHandler.swift in Sources */,
 				432BB8D0205065BF00FF7568 /* DataStore.swift in Sources */,
+				435C914E2053F4C70078D9C3 /* CommitsTableViewController.swift in Sources */,
 				439D269820529446005434C2 /* SignInPagePresenter.swift in Sources */,
 				439D26882051A406005434C2 /* RepositoriesPresenter.swift in Sources */,
 				439D26932051D310005434C2 /* RepositoriesTableViewController.swift in Sources */,
 				439D269A2052945E005434C2 /* SignInPageViewController.swift in Sources */,
+				435C91502053F50F0078D9C3 /* CommitsListPresenter.swift in Sources */,
 				432BB8CE2050637600FF7568 /* GitHubHiddenConstants.swift in Sources */,
 				439D268A2051A416005434C2 /* ProfilePagePresenter.swift in Sources */,
 			);

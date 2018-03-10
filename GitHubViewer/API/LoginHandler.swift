@@ -11,7 +11,8 @@ import UIKit
 protocol LoginHandler {
     func getOauthToken() -> String?
     func hasOauthToken() -> Bool
-    func clearOauthToken()
+    func clearUserDetails()
+    func getSignedInUser() -> User?
     func navigateToLoginPage(closure: @escaping ()->Void)
     func getToken(url: URL)
     func getUserDetails(closure: @escaping (User?)->())
@@ -32,15 +33,21 @@ class GithubLoginHandler: LoginHandler {
     }
 
     func getOauthToken() -> String? {
-        return dataStore.string(forKey: "OauthToken")
+        return dataStore.object(forKey: "OauthToken") as? String
     }
 
     func hasOauthToken() -> Bool {
         return getOauthToken() != nil
     }
 
-    func clearOauthToken() {
+    func clearUserDetails() {
         dataStore.removeObject(forKey: "OauthToken")
+        dataStore.removeObject(forKey: "SignedInUser")
+    }
+
+    func getSignedInUser() -> User? {
+        guard let userAsData = dataStore.object(forKey: "SignedInUser") as? Data else { return nil }
+        return NSKeyedUnarchiver.unarchiveObject(with: userAsData) as? User
     }
 
     func navigateToLoginPage(closure: @escaping ()->Void) {
@@ -64,7 +71,7 @@ class GithubLoginHandler: LoginHandler {
     func getToken(url: URL) {
         guard let recievedCode = getCodeFrom(url: url),
             let getTokenURL = URL(string: "https://github.com/login/oauth/access_token") else {
-            return // TODO HANDLE ERROR
+                return // TODO HANDLE ERROR
         }
 
         let params = ["code": recievedCode]
@@ -100,6 +107,8 @@ class GithubLoginHandler: LoginHandler {
                     closure(nil)
                     return
             }
+            let userAsData = NSKeyedArchiver.archivedData(withRootObject: user)
+            self.dataStore.set(userAsData, forKey: "SignedInUser")
             closure(user)
         }
     }

@@ -23,10 +23,6 @@ class RepositoriesTableViewController: UITableViewController, RepositoriesUI {
         presenter?.loadRepositoriesContent()
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-
     func reloadData() {
         tableView.reloadData()
     }
@@ -52,6 +48,13 @@ class RepositoriesTableViewController: UITableViewController, RepositoriesUI {
         }
 
         return cell ?? UITableViewCell()
+    }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let selectedRow = tableView.indexPathForSelectedRow?.row,
+            let nextVC = segue.destination as? CommitsTableViewController {
+            nextVC.repositoryName = presenter?.getSelectedRepositoryName(index: selectedRow)
+        }
     }
 }
 

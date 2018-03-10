@@ -22,7 +22,7 @@ class RepositoriesPresenter {
         self.repositoryHandler = repositoryHandler
     }
 
-    func loadRepositoriesContent() {
+    func loadRepositoriesContent() {        
         if loginHandler.hasOauthToken() {
             repositoryHandler.getRepositories() { repos in
                 guard let repos = repos else {
@@ -42,13 +42,17 @@ class RepositoriesPresenter {
         return repos?.count ?? 0
     }
 
+    func getSelectedRepositoryName(index: Int) -> String? {
+        return repos?[index].name
+    }
+
     func formatCell(at index: Int, closure: (Repository)->Void) {
         guard let repos = repos else { return }
         closure(repos[index])
     }
 
     private func signUserOut() {
-        loginHandler.clearOauthToken()
+        loginHandler.clearUserDetails()
         ui.navigateToSignInScreen()
     }
 }

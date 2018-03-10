@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -72,7 +73,7 @@
             </objects>
             <point key="canvasLocation" x="80.799999999999997" y="86.806596701649184"/>
         </scene>
-        <!--GithubViewer-->
+        <!--My Profile-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController storyboardIdentifier="profilePageViewController" modalTransitionStyle="flipHorizontal" id="BYZ-38-t0r" customClass="ProfilePageViewController" customModule="GitHubViewer" customModuleProvider="target" sceneMemberID="viewController">
@@ -84,7 +85,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="756"/>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kL6-qW-app">
-                                <rect key="frame" x="94" y="219.33333333333337" width="226" height="318"/>
+                                <rect key="frame" x="94" y="219" width="226" height="318"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="githubImage" translatesAutoresizingMaskIntoConstraints="NO" id="fvh-qz-ZEY">
                                         <rect key="frame" x="64" y="0.0" width="99" height="105"/>
@@ -94,19 +95,19 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6eC-hA-MTL">
-                                        <rect key="frame" x="85" y="124.99999999999997" width="56.666666666666657" height="27"/>
+                                        <rect key="frame" x="85" y="125" width="56.666666666666657" height="27"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Location" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Ik-UL-SgS">
-                                        <rect key="frame" x="72" y="161.99999999999997" width="82.333333333333314" height="26"/>
+                                        <rect key="frame" x="72" y="162" width="82.666666666666686" height="26"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Company" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QvC-zM-Csd">
-                                        <rect key="frame" x="67" y="197.99999999999997" width="92.333333333333314" height="26"/>
+                                        <rect key="frame" x="67" y="198" width="92.666666666666686" height="26"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -155,7 +156,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" title="GithubViewer" id="E5T-8o-p0k">
+                    <navigationItem key="navigationItem" title="My Profile" id="E5T-8o-p0k">
                         <barButtonItem key="backBarButtonItem" title="Back" id="NaN-lj-qKV"/>
                         <barButtonItem key="leftBarButtonItem" title="Sign Out" id="Vop-me-V2m">
                             <connections>
@@ -174,7 +175,7 @@
             </objects>
             <point key="canvasLocation" x="814.49275362318849" y="88.043478260869577"/>
         </scene>
-        <!--Repositories Table View Controller-->
+        <!--My Repositories-->
         <scene sceneID="ESZ-EL-k2V">
             <objects>
                 <tableViewController id="aMn-cz-PF5" customClass="RepositoriesTableViewController" customModule="GitHubViewer" customModuleProvider="target" sceneMemberID="viewController">
@@ -274,6 +275,7 @@
                                     <outlet property="starsLabel" destination="Cih-wK-9dh" id="G7N-MJ-gOU"/>
                                     <outlet property="titleLabel" destination="40N-Si-eQI" id="UPZ-yp-A7N"/>
                                     <outlet property="watchersLabel" destination="1wq-I5-bWn" id="imc-Qs-5gK"/>
+                                    <segue destination="dWj-Nt-b2n" kind="show" id="hsH-Dy-cE7"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -282,15 +284,14 @@
                             <outlet property="delegate" destination="aMn-cz-PF5" id="FUb-Fd-bWF"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="My Repositories" id="mMI-gE-zTn">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="sOq-OQ-4zT"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="44B-Zm-qF7" id="x2y-1l-C1E"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LsB-cn-DiF" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <imageView userInteractionEnabled="NO" alpha="0.40000000596046448" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gradient" id="7ch-f6-xAg">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                </imageView>
             </objects>
             <point key="canvasLocation" x="1592.8" y="88.605697151424295"/>
         </scene>
@@ -312,19 +313,64 @@
             </objects>
             <point key="canvasLocation" x="-722" y="87"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="O2a-4H-UKB">
+        <!--Commits Table View Controller-->
+        <scene sceneID="Y50-SH-jqq">
             <objects>
-                <viewController id="OsQ-kM-IS8" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="ADU-mn-sVp">
+                <tableViewController id="dWj-Nt-b2n" customClass="CommitsTableViewController" customModule="GitHubViewer" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="68" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="XhF-fL-6hx">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <viewLayoutGuide key="safeArea" id="aUd-jJ-sIN"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cyp-5X-37J" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                        <color key="backgroundColor" red="0.62831598519999998" green="0.84281814099999997" blue="0.8706243038" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="68" id="6me-Pl-EOP" customClass="CommitsTableViewCell" customModule="GitHubViewer" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="414" height="68"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6me-Pl-EOP" id="F5w-0t-2Yc">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="67.666666666666671"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="USA-PI-gie">
+                                            <rect key="frame" x="82.666666666666657" y="25" width="315.33333333333337" height="18"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date on multiple lines" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tM6-5G-aZh">
+                                            <rect key="frame" x="16" y="18.333333333333336" width="63" height="31.333333333333336"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="0.3243792808" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstItem="USA-PI-gie" firstAttribute="width" secondItem="F5w-0t-2Yc" secondAttribute="width" multiplier="0.8" constant="-16" id="38b-QI-v3h"/>
+                                        <constraint firstItem="tM6-5G-aZh" firstAttribute="leading" secondItem="F5w-0t-2Yc" secondAttribute="leading" constant="16" id="4sd-aV-8dE"/>
+                                        <constraint firstItem="tM6-5G-aZh" firstAttribute="centerY" secondItem="F5w-0t-2Yc" secondAttribute="centerY" id="6lp-ii-plh"/>
+                                        <constraint firstItem="tM6-5G-aZh" firstAttribute="width" secondItem="F5w-0t-2Yc" secondAttribute="width" multiplier="0.19" constant="-16" id="8IT-0r-X6T"/>
+                                        <constraint firstAttribute="trailing" secondItem="USA-PI-gie" secondAttribute="trailing" constant="16" id="b8I-if-QeP"/>
+                                        <constraint firstItem="USA-PI-gie" firstAttribute="centerY" secondItem="F5w-0t-2Yc" secondAttribute="centerY" id="wDm-nD-dVo"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dateLabel" destination="tM6-5G-aZh" id="oqg-kc-Ilp"/>
+                                    <outlet property="messageLabel" destination="USA-PI-gie" id="dhA-Pk-2b4"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="dWj-Nt-b2n" id="dlG-Vg-bdE"/>
+                            <outlet property="delegate" destination="dWj-Nt-b2n" id="1Gd-9B-8ML"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="tableView" destination="XhF-fL-6hx" id="NLB-JQ-w4X"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UJF-LC-2lP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="2350.7246376811595" y="87.228260869565219"/>
         </scene>
     </scenes>
     <resources>

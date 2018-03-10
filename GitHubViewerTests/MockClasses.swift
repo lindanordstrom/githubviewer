@@ -39,7 +39,7 @@ class TestLoginHandler: LoginHandler {
     var hasOauthTokenVar = false
     var navigateToLoginPageCalled = false
     var getUserDetailsCalled = false
-    var clearOauthTokenCalled = true
+    var clearUserDetailsCalled = true
     var url: URL?
     var user: User?
     var closure: (()->Void)?
@@ -50,8 +50,8 @@ class TestLoginHandler: LoginHandler {
     func hasOauthToken() -> Bool {
         return hasOauthTokenVar
     }
-    func clearOauthToken() {
-        clearOauthTokenCalled = true
+    func clearUserDetails() {
+        clearUserDetailsCalled = true
     }
     func navigateToLoginPage(closure: @escaping () -> Void) {
         navigateToLoginPageCalled = true

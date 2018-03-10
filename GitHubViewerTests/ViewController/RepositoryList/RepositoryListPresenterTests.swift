@@ -86,7 +86,7 @@ class RepositoryListPresenterTests: XCTestCase {
 
         testObject.loadRepositoriesContent()
 
-        XCTAssertTrue(loginHandler.clearOauthTokenCalled)
+        XCTAssertTrue(loginHandler.clearUserDetailsCalled)
         XCTAssertTrue(repositoriesUI.navigateToSignInScreenCalled)
     }
 

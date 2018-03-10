@@ -39,7 +39,7 @@ class ProfilePagePresenter {
     }
 
     func signUserOut() {
-        loginHandler.clearOauthToken()
+        loginHandler.clearUserDetails()
         ui.navigateToSignInScreen()
     }
 

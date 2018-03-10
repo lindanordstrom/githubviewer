@@ -14,4 +14,9 @@ struct Repository: Codable {
     var stargazers_count: Int?
     var watchers_count: Int?
     var forks: Int?
+    var owner: Owner?
+}
+
+struct Owner: Codable {
+    var login: String?
 }

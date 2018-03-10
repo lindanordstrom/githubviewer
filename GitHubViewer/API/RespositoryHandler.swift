@@ -10,6 +10,7 @@ import Foundation
 
 protocol RepositoryHandler {
     func getRepositories(closure: @escaping ([Repository]?)->())
+    func getCommits(for repo: String, closure: @escaping ([Commit]?)->())
 }
 
 class GithubRepositoryHandler: RepositoryHandler {
@@ -40,8 +41,42 @@ class GithubRepositoryHandler: RepositoryHandler {
                     closure(nil)
                     return
             }
-            closure(repositories)
+
+            let ownRepositories = self.filterOutOnlyOwnRepositories(repos: repositories)
+
+            closure(ownRepositories)
         }
+    }
+
+    func getCommits(for repo: String, closure: @escaping ([Commit]?) -> ()) {
+        guard let oauthToken = loginHandler.getOauthToken(),
+            let username = loginHandler.getSignedInUser()?.login,
+            let url = URL(string: "https://api.github.com/repos/\(username)/\(repo)/commits") else {
+                closure(nil)
+                return
+        }
+
+        let param = ["access_token": oauthToken]
+
+        githubApiHandler.networkRequest(url: url, method: .get, parameters: param, headers: nil) { (data, error) in
+            guard let data = data,
+                error == nil,
+                let commits = try? JSONDecoder().decode([Commit].self, from: data) else {
+                    print(error?.localizedDescription ?? "error fetching data") // TODO HANDLE ERROR
+                    closure(nil)
+                    return
+            }
+            closure(commits)
+        }
+
+    }
+
+    private func filterOutOnlyOwnRepositories(repos: [Repository]) -> [Repository] {
+        let filteredRepos = repos.flatMap { repo -> Repository? in
+            guard repo.owner?.login == loginHandler.getSignedInUser()?.login else { return nil }
+            return repo
+        }
+        return filteredRepos
     }
 }
 

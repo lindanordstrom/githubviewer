@@ -53,12 +53,12 @@ class LoginHandlerTests: XCTestCase {
     }
 
     // given: oauthToken exists
-    // when: calling clearOauthToken
+    // when: calling clearUserDetails
     // then: the token should be removed
-    func testClearOauthToken() {
+    func testClearUserDetails() {
         dataStore.value = "1234"
 
-        testObject.clearOauthToken()
+        testObject.clearUserDetails()
 
         XCTAssertTrue(dataStore.removeObjectForKeyCalled)
         XCTAssertNil(dataStore.value)
