@@ -1,0 +1,13 @@
+* Fick problem med att använda Basic Authentication trots base64 encodat username och password medskickat som Authorization-header. 
+Fick ”Problems Parsin JSON” när credentials var rätt. Valde att övergå till webflow istället.
+
+* För att få ordning på web flow tog jag viss inspiration från följande sida för att förstå hur jag behövde göra med redirect URL och andra ios specifika detaljer som inte togs upp i githubs api dokumentation: 
+
+https://grokswift.com/alamofire-OAuth2/\
+
+* Jag har skapat en hel del protokoll för testbarhet, men inser att det snabbt kan bli rörigt och svårt att överblicka?
+
+* >93% test coverage på 6 utav de 7 testbara filerna (ej medräknat viewcontrollers, dataobjekt eller appdelegate).
+APIHandlern har ej några test då det blev bökigt att försöka mocka Alamofire, men bör ses över
+
+* Saknar all form av error handling, för tillfället blir användaren alltid utloggad om något fel med endpointen uppstår
