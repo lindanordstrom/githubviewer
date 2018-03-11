@@ -128,7 +128,7 @@ class CommitListPresenterTests: XCTestCase {
 
         testObject.formatCell(at: 1) { commit in
             XCTAssertEqual(commit.commit?.message, "test2")
-            XCTAssertEqual(commit.commit?.author?.date, "Jan 03, 2018")
+            XCTAssertEqual(commit.commit?.author?.date, "Mar 03, 2018")
             exp.fulfill()
         }
 
