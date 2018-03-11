@@ -57,7 +57,7 @@ class CommitsListPresenter {
 
     private func format(dateTimeString: String) -> String? {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-mm-dd'T'HH:mm:ss'Z'"
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
         guard let dateObj = dateFormatter.date(from: dateTimeString) else { return nil }
         dateFormatter.dateFormat = "MMM dd, yyyy"
         return dateFormatter.string(from: dateObj)
